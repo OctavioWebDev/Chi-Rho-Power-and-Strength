@@ -105,7 +105,7 @@ export default function Footer() {
                                 Coaching
                             </FooterLink>
                             <FooterLink href="https://chirholifts.com/" icon={faMobileScreen} external>
-                                Lift-Log App
+                                Chi-Rho Lifts App
                             </FooterLink>
                         </div>
                     </div>

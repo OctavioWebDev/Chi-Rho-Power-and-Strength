@@ -15,6 +15,7 @@ export default function CoachingPage() {
         'Comprehensive, hands-on online coaching for men who are serious about getting stronger and building a body that performs. Weekly check-ins, form review, and programming that adapts to your life — whether your goal is chasing PRs or losing significant weight while preserving muscle.',
       features: [
         'Fully individualized auto-regulated programming',
+        'Your program and meal plan in the Chi-Rho Lifts app (included free)',
         'Weekly video check-ins (15-20 minutes)',
         'Unlimited form check reviews via video',
         'Direct messaging access (24-hour response)',
@@ -362,13 +363,13 @@ export default function CoachingPage() {
         </div>
       </section>
 
-      {/* Lift-Log App Callout */}
+      {/* Chi-Rho Lifts App Callout */}
       <section className="py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center gap-6 bg-gray-900 border border-gray-800 rounded-xl p-6 md:p-8">
           <div className="flex-1">
-            <h3 className="text-2xl font-bold text-white mb-2">Track Every Session in Lift-Log</h3>
+            <h3 className="text-2xl font-bold text-white mb-2">Your Program Lives in Chi-Rho Lifts</h3>
             <p className="text-gray-300">
-              Every coaching client trains in Lift-Log — the app I built to log sets, track PRs, and stay on top of your program between check-ins. Available on web and mobile.
+              Every coaching client gets the Chi-Rho Lifts app free. I program your workouts and your meals in it. You check off each set and meal, adjust weight and RPE as you go, and I see what you planned next to what you actually did, every week. Available on web and mobile.
             </p>
           </div>
           <a
@@ -377,7 +378,7 @@ export default function CoachingPage() {
             rel="noopener noreferrer"
             className="flex-shrink-0 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-3 px-6 rounded-lg transition duration-200"
           >
-            Try Lift-Log →
+            See Chi-Rho Lifts →
           </a>
         </div>
       </section>
