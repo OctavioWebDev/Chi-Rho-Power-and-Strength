@@ -19,7 +19,7 @@ export default function InPersonCoaching() {
         'Fully periodized custom programming updated in real time',
         'Every session coached — no guesswork, no wasted reps',
         'Weekly program adjustments based on how you\'re performing',
-        'Priority messaging — same-day responses',
+        'Priority messaging in the Chi-Rho Lifts app — same-day responses',
         'Comprehensive nutrition framework',
         'Quarterly deep-dive programming design sessions',
       ],

@@ -18,7 +18,7 @@ export default function CoachingPage() {
         'Your program and meal plan in the Chi-Rho Lifts app (included free)',
         'Weekly video check-ins (15-20 minutes)',
         'Unlimited form check reviews via video',
-        'Direct messaging access (24-hour response)',
+        'Direct messaging in the Chi-Rho Lifts app (24-hour response)',
         'Nutrition guidance framework — strength-focused or fat-loss focused',
         'Program adjustments based on recovery, stress, and schedule',
         'TRT and GLP-1 medication considerations if applicable',
@@ -44,7 +44,7 @@ export default function CoachingPage() {
       features: [
         'Everything in Strength Coaching, plus:',
         'Daily check-ins and real-time program adjustments',
-        'Priority messaging (same-day response)',
+        'Priority messaging in the Chi-Rho Lifts app (same-day response)',
         'Bi-weekly video calls (30 minutes)',
         'Competition prep and peaking protocols (if applicable)',
         'Nutrition periodization and supplement guidance',

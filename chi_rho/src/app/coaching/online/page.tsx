@@ -16,10 +16,10 @@ export default function OnlineCoaching() {
       features: [
         'Custom training program based on detailed assessment',
         'Your program and meal plan in the Chi-Rho Lifts app (included free)',
-        'Weekly check-ins via discord',
+        'Weekly check-ins in the Chi-Rho Lifts app',
         'Form check video analysis (up to 3/week)',
         'Program adjustments based on performance data',
-        'Direct messaging support (24-hour response time)',
+        'Direct messaging in the Chi-Rho Lifts app (24-hour response time)',
         'Bi-weekly accountability calls (15 minutes)',
         'Nutrition framework — strength-focused or fat-loss focused',
         'TRT and GLP-1 medication considerations if applicable'
@@ -45,7 +45,7 @@ export default function OnlineCoaching() {
         'Everything in Strength Coaching, PLUS:',
         'Bi-weekly video coaching calls (30 minutes)',
         'Unlimited form check reviews (48-hour turnaround)',
-        'Daily messaging access via private channel',
+        'Daily messaging access in the Chi-Rho Lifts app',
         'Comprehensive nutrition coaching',
         'Competition prep and attempt selection',
         'Quarterly in-depth program design sessions',
