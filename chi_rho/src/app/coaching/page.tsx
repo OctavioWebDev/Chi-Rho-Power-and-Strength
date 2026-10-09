@@ -22,7 +22,6 @@ export default function CoachingPage() {
         'Direct messaging in the Chi-Rho Lifts app (24-hour response time)',
         'Bi-weekly accountability calls (15 minutes)',
         'Nutrition framework — strength-focused or fat-loss focused',
-        'TRT and GLP-1 medication considerations if applicable',
       ],
       bestFor: [
         'Men who want real accountability and coaching',
@@ -79,9 +78,9 @@ export default function CoachingPage() {
     },
     {
       icon: <FaHeartbeat className="w-8 h-8 text-yellow-500" />,
-      title: 'Real Talk on Health',
+      title: 'Training That Fits Your Health',
       description:
-        'TRT knowledge from personal experience. GLP-1 medication considerations. Coaching that accounts for the stuff most trainers ignore.',
+        'Coming back from an injury, managing a condition, or on a prescribed medication? I build your training around where you are. Medical decisions stay with your doctor.',
     },
     {
       icon: <FaUsers className="w-8 h-8 text-yellow-500" />,
@@ -142,7 +141,7 @@ export default function CoachingPage() {
               'You\'re tired of spinning your wheels with random YouTube workouts',
               'You\'ve got 30, 50, or 100+ pounds to lose and don\'t know where to start',
               'You used to be strong but life got in the way—kids, career, injuries',
-              'You\'re on TRT or GLP-1 meds and need a coach who actually understands that',
+              'You\'re under a doctor\'s care and want training that works alongside it',
               'You want to build real strength, not just "tone up"',
               'You need someone to hold you accountable because willpower alone isn\'t cutting it',
               'You\'re a beginner who wants to learn the barbell lifts the right way',
@@ -437,8 +436,8 @@ export default function CoachingPage() {
                 a: "That's backwards, and it's the number one reason guys fail. Strength training while losing weight preserves muscle, keeps your metabolism healthy, and gives you something productive to focus on besides the scale. Strength Coaching is built to flex toward a fat-loss and health focus, not just chasing PRs.",
               },
               {
-                q: "I'm on TRT / GLP-1 medication. Can you work with that?",
-                a: "Yes. I'm on TRT myself, so I understand the considerations firsthand. For GLP-1 clients, resistance training is critical—research shows 15-25% of weight lost on these meds comes from muscle. That's exactly what we prevent.",
+                q: "I'm on a prescribed medication (like TRT or a GLP-1). Can you work with that?",
+                a: "Yes, I coach lifters on prescribed medications. I'm not a doctor and I don't give medical advice: questions about your medication, dosing, or labs belong with your physician. My job is your training, and I'll program around whatever your doctor has you doing.",
               },
               {
                 q: 'What\'s the difference between Strength Coaching and the Program Design Consultation?',

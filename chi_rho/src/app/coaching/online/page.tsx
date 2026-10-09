@@ -21,8 +21,7 @@ export default function OnlineCoaching() {
         'Program adjustments based on performance data',
         'Direct messaging in the Chi-Rho Lifts app (24-hour response time)',
         'Bi-weekly accountability calls (15 minutes)',
-        'Nutrition framework — strength-focused or fat-loss focused',
-        'TRT and GLP-1 medication considerations if applicable'
+        'Nutrition framework — strength-focused or fat-loss focused'
       ],
       bestFor: [
         'Intermediate to advanced lifters chasing PRs',
