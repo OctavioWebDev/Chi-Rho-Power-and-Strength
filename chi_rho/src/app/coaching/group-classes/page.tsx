@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { FaCheck, FaUsers, FaMars, FaVenus, FaTrophy, FaCalendarAlt } from 'react-icons/fa';
+import { FaCheck, FaUsers, FaMars, FaTrophy, FaCalendarAlt } from 'react-icons/fa';
 
 export default function GroupClassTraining() {
   const classes = [
@@ -24,24 +24,6 @@ export default function GroupClassTraining() {
       spotsLeft: 10,
       description: 'Same no-nonsense programming as the morning class, just a later time slot for working men who train after hours.',
     },
-    {
-      name: "Women's Morning Class",
-      icon: <FaVenus className="w-6 h-6" />,
-      gender: 'Female',
-      ageGroup: '50+',
-      spotsTotal: 12,
-      spotsLeft: 7,
-      description: 'Strength training designed for women over 50. Build bone density, preserve muscle, and develop real functional strength — no machines, no fluff.',
-    },
-    {
-      name: "Women's Evening Class",
-      icon: <FaVenus className="w-6 h-6" />,
-      gender: 'Female',
-      ageGroup: '50+',
-      spotsTotal: 12,
-      spotsLeft: 9,
-      description: 'Evening strength class for women who want a dedicated, focused training environment with others at the same stage of life.',
-    },
   ];
 
   const whyItWorks = [
@@ -58,8 +40,8 @@ export default function GroupClassTraining() {
       description: 'The "Shut Up and Lift" principles apply here. Progressive overload. Compound movements. Consistency over complexity.',
     },
     {
-      title: 'Single-Gender Classes',
-      description: 'Men and women train separately. Different coaching cues, different dynamics, better focus for everyone.',
+      title: 'Built for Men Over 50',
+      description: 'Every class is men only, coached around the recovery, joint health and goals of this stage of life.',
     },
   ];
 
@@ -77,7 +59,7 @@ export default function GroupClassTraining() {
           </h1>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-4">
-            Coached barbell training in small groups. Built specifically for men and women over 50 who are done sitting on the sidelines.
+            Coached barbell training in small groups. Built specifically for men over 50 who are done sitting on the sidelines.
           </p>
           <div className="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full px-5 py-2">
             <FaUsers className="text-yellow-500 w-4 h-4" />
@@ -160,7 +142,7 @@ export default function GroupClassTraining() {
           <h2 className="text-3xl font-bold text-center text-yellow-400 mb-4">The 4 Classes</h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mb-4"></div>
           <p className="text-center text-gray-400 text-sm mb-12 max-w-xl mx-auto">
-            Single-gender classes for focused coaching. Pick the one that fits your schedule.
+            Two class times for men over 50. Pick the one that fits your schedule.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -270,8 +252,8 @@ export default function GroupClassTraining() {
                 a: 'No. These classes are designed for people who may be coming back to fitness or starting fresh. We teach the movements from scratch and progress at a pace that makes sense for you.',
               },
               {
-                q: 'Why single-gender classes?',
-                a: 'Men and women over 50 have different training considerations — hormonal differences, recovery patterns, coaching cues that land differently. Single-gender classes let me coach more precisely.',
+                q: 'Do you offer classes for women?',
+                a: 'Not yet. Group classes are for men over 50 for now. Women are welcome in 1-on-1 coaching, online or in person.',
               },
               {
                 q: 'Can I switch classes if my schedule changes?',
