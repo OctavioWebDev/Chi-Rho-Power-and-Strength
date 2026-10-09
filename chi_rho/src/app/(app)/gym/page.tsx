@@ -73,6 +73,7 @@ const tiers: Array<{
       'First through the doors at soft open',
       'Everything in Supporter Plus',
       'Quarterly 1-on-1 programming review (30 min)',
+      'Chi-Rho Lifts app included',
     ],
     highlight: true,
     badge: 'MOST POPULAR',
@@ -88,6 +89,7 @@ const tiers: Array<{
       'Full gym access, cancel anytime',
       '$25/month locked for life',
       'Founding member status + Discord role',
+      'Chi-Rho Lifts app included',
       'Everything in Community Supporter',
     ],
   },
@@ -101,6 +103,7 @@ const tiers: Array<{
     perks: [
       'Full Chi-Rho online coaching package',
       '$25/month gym membership credit at opening',
+      'Chi-Rho Lifts app included',
       'Priority access to in-person training slots',
       'Founding member status for life',
       'Everything in Supporter Plus',
@@ -110,8 +113,9 @@ const tiers: Array<{
 ];
 
 const equipment = [
-  { item: '6× Rogue RML-490 Power Racks', desc: 'The only rack that matters.' },
-  { item: '8× Rogue Ohio Barbells', desc: 'Aggressive knurl, stiff steel.' },
+  { item: '4× Rogue HR-2 Half Racks', desc: 'Each with a bench, bar and plates package.' },
+  { item: '4× Rogue RM-3 Monster Racks', desc: 'Full workout stations for the main lifts.' },
+  { item: '16× Rogue Ohio Power Bars', desc: 'Aggressive knurl, stiff steel.' },
   { item: 'Full Olympic Plate Sets', desc: '1.25 lb through 45 lb plates in quantity.' },
   { item: '4× Rogue Westside Benches', desc: 'Wide pad, competition height.' },
   { item: 'Rubber Flooring & Deadlift Platforms', desc: '2,500–3,000 sq ft of proper training surface.' },
@@ -277,6 +281,9 @@ export default function GymFundingPage() {
             <p className="text-gray-300 max-w-2xl mx-auto">
               Every tier directly funds equipment, space, and buildout. Your founding rate is locked in — this is the lowest price this gym will ever offer.
             </p>
+            <p className="text-gray-400 text-sm max-w-2xl mx-auto mt-3">
+              Founding rates: $25/month or $300/year. After the campaign, memberships are $35/month or $300/year. Every membership, coaching plan, and class includes the Chi-Rho Lifts app.
+            </p>
           </div>
 
           {error && (
@@ -429,8 +436,12 @@ export default function GymFundingPage() {
                 a: "Yes. Chi-Rho is built for people who want to get strong — beginners included. Coaches on staff, no judgment culture. The opposite of a globo-gym.",
               },
               {
+                q: "What's the Chi-Rho Lifts app?",
+                a: "Chi-Rho Lifts is the training app built for this gym: log every set, track your progress and nutrition, and train from the program your coach builds. It's included with every membership, coaching plan, and class.",
+              },
+              {
                 q: "Is my founding monthly rate really locked forever?",
-                a: "Your founding rate is locked for the first year. After that, you'll be protected from any price increases with 90-day advance notice.",
+                a: "Yes. Your founding rate is locked for life, as long as you keep your membership active. If you cancel and rejoin later, you'll pay the standard rate.",
               },
               {
                 q: "Can I get a refund if something falls through?",
