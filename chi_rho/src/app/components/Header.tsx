@@ -129,7 +129,7 @@ export default function Header() {
                                     rel="noopener noreferrer"
                                     className="block px-4 py-2 hover:bg-gray-800 hover:text-yellow-400 transition-colors"
                                 >
-                                    Lift-Log App
+                                    Chi-Rho Lifts App
                                 </Link>
                                 <Link
                                     href="/blog"

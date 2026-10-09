@@ -15,6 +15,7 @@ export default function OnlineCoaching() {
       description: 'Comprehensive coaching for serious lifters chasing PRs — or for men who need to lose significant weight while preserving muscle.',
       features: [
         'Custom training program based on detailed assessment',
+        'Your program and meal plan in the Chi-Rho Lifts app (included free)',
         'Weekly check-ins via discord',
         'Form check video analysis (up to 3/week)',
         'Program adjustments based on performance data',
@@ -78,7 +79,7 @@ export default function OnlineCoaching() {
     {
       step: '3',
       title: 'Assessment & Setup',
-      description: 'Complete detailed assessment, get your training portal access, and receive your first program.',
+      description: 'Complete a detailed assessment, get free access to the Chi-Rho Lifts app, and receive your first program in it.',
       icon: <FaChartLine className="w-8 h-8" />
     },
     {
@@ -116,7 +117,7 @@ export default function OnlineCoaching() {
                 'Programs built around your equipment and schedule',
                 'Expert programming without the commute',
                 'More affordable than in-person training',
-                'Ongoing support via app and messaging',
+                'Your program, meal plan, and progress in the Chi-Rho Lifts app',
                 'Form checks via video analysis'
               ].map((benefit, i) => (
                 <li key={i} className="flex items-start">
