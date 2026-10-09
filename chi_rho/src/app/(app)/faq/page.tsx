@@ -179,8 +179,8 @@ export default function FAQPage() {
       question: 'What\'s the difference between your two online packages?',
       answer: (
         <>
-          <p className="mb-3"><strong className="text-yellow-400">Strength Coaching ($250/mo):</strong> Weekly check-ins, form checks, messaging support, bi-weekly calls, a nutrition framework that flexes toward strength or fat-loss goals. For people who want real accountability and regular feedback.</p>
-          <p><strong className="text-yellow-400">Elite ($500/mo):</strong> White-glove service. Daily check-ins, bi-weekly video calls, unlimited form checks, daily messaging, comprehensive nutrition, competition prep. For serious lifters who demand premium support.</p>
+          <p className="mb-3"><strong className="text-yellow-400">Strength Coaching ($250/mo):</strong> Weekly check-ins, form checks (up to 3/week), messaging support, bi-weekly calls, a nutrition framework that flexes toward strength or fat-loss goals. For people who want real accountability and regular feedback.</p>
+          <p><strong className="text-yellow-400">Elite ($500/mo):</strong> White-glove service, limited to 5 clients at any time. Bi-weekly video calls, unlimited form checks, daily messaging, comprehensive nutrition, competition prep. For serious lifters who demand premium support.</p>
         </>
       )
     },
@@ -199,7 +199,7 @@ export default function FAQPage() {
     {
       category: 'Technical',
       question: 'What app/platform do you use?',
-      answer: 'I use a training app for program delivery, form check uploads, and communication (exact platform depends on your package). You\'ll get login credentials after signing up. It works on both phone and desktop.'
+      answer: 'Your program, check-ins, and messaging live in the Chi-Rho Lifts app, included free with coaching. Form-check videos are uploaded via Discord. You\'ll get login credentials after signing up. It works on both phone and desktop.'
     },
     {
       category: 'Technical',

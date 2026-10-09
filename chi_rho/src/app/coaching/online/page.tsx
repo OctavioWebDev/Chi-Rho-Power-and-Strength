@@ -40,7 +40,7 @@ export default function OnlineCoaching() {
       price: '$500',
       period: '/month',
       tagline: 'Premium Service',
-      description: 'White-glove service for competitive lifters pursuing elite strength.',
+      description: 'White-glove service for competitive lifters pursuing elite strength. Limited to 5 clients at any time.',
       features: [
         'Everything in Strength Coaching, PLUS:',
         'Bi-weekly video coaching calls (30 minutes)',
