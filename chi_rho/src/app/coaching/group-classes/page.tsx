@@ -12,7 +12,7 @@ export default function GroupClassTraining() {
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
-      spotsTotal: 12,
+      spotsTotal: 5,
       spotsLeft: 5,
       description: 'Barbell-focused strength training built around what men over 50 actually need — joint-friendly loading, controlled progression, and real strength gains.',
     },
@@ -22,7 +22,7 @@ export default function GroupClassTraining() {
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
-      spotsTotal: 12,
+      spotsTotal: 5,
       spotsLeft: 5,
       description: 'Same no-nonsense programming as the morning class, just a later time slot for working men who train after hours.',
     },
@@ -32,7 +32,7 @@ export default function GroupClassTraining() {
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
-      spotsTotal: 12,
+      spotsTotal: 5,
       spotsLeft: 5,
       description: 'The same barbell-focused programming on a Tuesday, Thursday and Saturday schedule.',
     },
@@ -42,7 +42,7 @@ export default function GroupClassTraining() {
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
-      spotsTotal: 12,
+      spotsTotal: 5,
       spotsLeft: 5,
       description: 'Evening sessions on a Tuesday, Thursday and Saturday schedule for men who train after work.',
     },
@@ -55,7 +55,7 @@ export default function GroupClassTraining() {
     },
     {
       title: 'Small Groups Only',
-      description: 'Classes cap at 12. You get coached, not just counted. Minimum of 5 to launch, so every class is tight-knit by design.',
+      description: 'Classes cap at 5. You get coached, not just counted. Minimum of 3 to launch, so every class is tight-knit by design.',
     },
     {
       title: 'Same Methodology',
@@ -85,7 +85,7 @@ export default function GroupClassTraining() {
           </p>
           <div className="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/30 rounded-full px-5 py-2">
             <FaUsers className="text-yellow-500 w-4 h-4" />
-            <span className="text-yellow-400 text-sm font-semibold">Minimum 5 to launch a class — spots are limited</span>
+            <span className="text-yellow-400 text-sm font-semibold">Minimum 3 to launch a class — spots are limited</span>
           </div>
         </div>
 
@@ -154,7 +154,7 @@ export default function GroupClassTraining() {
                 Reserve Your Spot
               </Link>
               <p className="text-center text-gray-500 text-xs mt-3">
-                Classes launch once 5 members are confirmed. Reserve now to lock in your spot.
+                Classes launch once 3 members are confirmed. Reserve now to lock in your spot.
               </p>
             </div>
           </div>
@@ -267,8 +267,8 @@ export default function GroupClassTraining() {
           <div className="space-y-4">
             {[
               {
-                q: 'What if a class doesn\'t reach 5 people?',
-                a: 'The class doesn\'t launch until 5 members confirm. If you\'ve paid upfront and we don\'t hit 5, you get a full refund or can transfer to another class.',
+                q: 'What if a class doesn\'t reach 3 people?',
+                a: 'The class doesn\'t launch until 3 members confirm. If you\'ve paid upfront and we don\'t hit 3, you get a full refund or can transfer to another class.',
               },
               {
                 q: 'Do I need prior training experience?',
@@ -304,7 +304,7 @@ export default function GroupClassTraining() {
           <h2 className="text-3xl font-bold text-white mb-4">Ready to Train with People Who Get It?</h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mb-6"></div>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Classes are small by design. Reserve your spot now — a class launches the moment 5 members are confirmed.
+            Classes are small by design. Reserve your spot now — a class launches the moment 3 members are confirmed.
           </p>
           <div className="space-y-4 sm:space-y-0 sm:space-x-4">
             <Link
