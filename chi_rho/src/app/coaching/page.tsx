@@ -282,7 +282,7 @@ export default function CoachingPage() {
               <h3 className="text-2xl font-bold text-white mb-1">Group Classes</h3>
               <p className="text-3xl font-extrabold text-yellow-500 mb-3">$300<span className="text-base font-normal text-gray-400">/month</span></p>
               <p className="text-gray-400 text-sm mb-4">
-                Coached barbell training in small groups, built for men over 50. Classes are capped at 12 people.
+                Coached barbell training in small groups, built for men over 50. Classes are capped at 5 people.
               </p>
               <Link
                 href="/coaching/group-classes"
