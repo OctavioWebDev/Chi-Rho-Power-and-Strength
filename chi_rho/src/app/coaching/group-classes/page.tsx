@@ -27,24 +27,24 @@ export default function GroupClassTraining() {
       description: 'Same no-nonsense programming as the morning class, just a later time slot for working men who train after hours.',
     },
     {
-      name: "Men's Morning Class (Tue/Thu/Fri)",
-      days: 'Tue · Thu · Fri',
+      name: "Men's Morning Class (Tue/Thu/Sat)",
+      days: 'Tue · Thu · Sat',
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
       spotsTotal: 12,
       spotsLeft: 5,
-      description: 'The same barbell-focused programming on a Tuesday, Thursday and Friday schedule.',
+      description: 'The same barbell-focused programming on a Tuesday, Thursday and Saturday schedule.',
     },
     {
-      name: "Men's Evening Class (Tue/Thu/Fri)",
-      days: 'Tue · Thu · Fri',
+      name: "Men's Evening Class (Tue/Thu/Sat)",
+      days: 'Tue · Thu · Sat',
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
       spotsTotal: 12,
       spotsLeft: 5,
-      description: 'Evening sessions on a Tuesday, Thursday and Friday schedule for men who train after work.',
+      description: 'Evening sessions on a Tuesday, Thursday and Saturday schedule for men who train after work.',
     },
   ];
 
@@ -164,7 +164,7 @@ export default function GroupClassTraining() {
           <h2 className="text-3xl font-bold text-center text-yellow-400 mb-4">The 4 Classes</h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mb-4"></div>
           <p className="text-center text-gray-400 text-sm mb-12 max-w-xl mx-auto">
-            Four classes for men over 50: two on Monday, Wednesday and Friday, two on Tuesday, Thursday and Friday. Pick the one that fits your schedule.
+            Four classes for men over 50: two on Monday, Wednesday and Friday, two on Tuesday, Thursday and Saturday. Pick the one that fits your schedule.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
