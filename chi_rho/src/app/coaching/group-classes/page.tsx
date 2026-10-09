@@ -116,6 +116,7 @@ export default function GroupClassTraining() {
                   'Warm-up and cool-down protocols for 50+ recovery',
                   'Access to class notes and workout log',
                   'Direct messaging support between sessions',
+                  'Chi-Rho Lifts app included',
                 ].map((feature, i) => (
                   <li key={i} className="flex items-start text-sm">
                     <FaCheck className="w-4 h-4 text-yellow-500 mr-2 mt-0.5 flex-shrink-0" />
