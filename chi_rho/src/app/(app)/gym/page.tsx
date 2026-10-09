@@ -441,7 +441,7 @@ export default function GymFundingPage() {
               },
               {
                 q: "Is my founding monthly rate really locked forever?",
-                a: "Your founding rate is locked for the first year. After that, you'll be protected from any price increases with 90-day advance notice.",
+                a: "Yes. Your founding rate is locked for life, as long as you keep your membership active. If you cancel and rejoin later, you'll pay the standard rate.",
               },
               {
                 q: "Can I get a refund if something falls through?",
