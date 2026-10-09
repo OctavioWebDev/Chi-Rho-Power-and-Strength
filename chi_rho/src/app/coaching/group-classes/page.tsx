@@ -7,22 +7,44 @@ import { FaCheck, FaUsers, FaMars, FaTrophy, FaCalendarAlt } from 'react-icons/f
 export default function GroupClassTraining() {
   const classes = [
     {
-      name: "Men's Morning Class",
+      name: "Men's Morning Class (Mon/Wed/Fri)",
+      days: 'Mon · Wed · Fri',
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
       spotsTotal: 12,
-      spotsLeft: 8,
+      spotsLeft: 5,
       description: 'Barbell-focused strength training built around what men over 50 actually need — joint-friendly loading, controlled progression, and real strength gains.',
     },
     {
-      name: "Men's Evening Class",
+      name: "Men's Evening Class (Mon/Wed/Fri)",
+      days: 'Mon · Wed · Fri',
       icon: <FaMars className="w-6 h-6" />,
       gender: 'Male',
       ageGroup: '50+',
       spotsTotal: 12,
-      spotsLeft: 10,
+      spotsLeft: 5,
       description: 'Same no-nonsense programming as the morning class, just a later time slot for working men who train after hours.',
+    },
+    {
+      name: "Men's Morning Class (Tue/Thu/Sat)",
+      days: 'Tue · Thu · Sat',
+      icon: <FaMars className="w-6 h-6" />,
+      gender: 'Male',
+      ageGroup: '50+',
+      spotsTotal: 12,
+      spotsLeft: 5,
+      description: 'The same barbell-focused programming on a Tuesday, Thursday and Saturday schedule.',
+    },
+    {
+      name: "Men's Evening Class (Tue/Thu/Sat)",
+      days: 'Tue · Thu · Sat',
+      icon: <FaMars className="w-6 h-6" />,
+      gender: 'Male',
+      ageGroup: '50+',
+      spotsTotal: 12,
+      spotsLeft: 5,
+      description: 'Evening sessions on a Tuesday, Thursday and Saturday schedule for men who train after work.',
     },
   ];
 
@@ -143,7 +165,7 @@ export default function GroupClassTraining() {
           <h2 className="text-3xl font-bold text-center text-yellow-400 mb-4">The 4 Classes</h2>
           <div className="w-24 h-1 bg-yellow-500 mx-auto mb-4"></div>
           <p className="text-center text-gray-400 text-sm mb-12 max-w-xl mx-auto">
-            Two class times for men over 50. Pick the one that fits your schedule.
+            Four classes for men over 50: two on Monday, Wednesday and Friday, two on Tuesday, Thursday and Saturday. Pick the one that fits your schedule.
           </p>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -163,7 +185,7 @@ export default function GroupClassTraining() {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-white">{cls.name}</h3>
-                      <p className="text-xs text-gray-500">Ages {cls.ageGroup} · Max {cls.spotsTotal} per class</p>
+                      <p className="text-xs text-gray-500">{cls.days} · Ages {cls.ageGroup} · Max {cls.spotsTotal} per class</p>
                     </div>
                   </div>
                   <div className="text-right">
