@@ -106,8 +106,8 @@ export default function FAQPage() {
       question: 'How quickly do you respond to messages?',
       answer: (
         <>
-          <p className="mb-2"><strong className="text-yellow-400">Strength Coaching:</strong> 24-hour response time via discord</p>
-          <p><strong className="text-yellow-400">Elite:</strong> Same-day response via private channel</p>
+          <p className="mb-2"><strong className="text-yellow-400">Strength Coaching:</strong> 24-hour response time, messaging in the Chi-Rho Lifts app</p>
+          <p><strong className="text-yellow-400">Elite:</strong> Same-day response, messaging in the Chi-Rho Lifts app</p>
         </>
       )
     },
