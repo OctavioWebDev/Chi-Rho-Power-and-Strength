@@ -5,15 +5,15 @@ export const metadata: Metadata = {
     default: "Chi-Rho Power & Strength",
     template: "%s | Chi-Rho Power & Strength",
   },
-  description: "Prepare, Commit, Respond - A blog on my thoughts and learnings on strength training and living a purposeful life.",
-  keywords: ['strength training', 'fitness', 'bodyweight exercises', 'workout plans', 'health and wellness'],
-  authors: [{ name: 'Your Name' }],
-  creator: 'Your Name',
+  description: "Strength coaching for men in Toledo and online. Are you stronger than you were last month?",
+  keywords: ['strength coaching', 'Toledo', 'barbell', 'powerlifting', 'online coaching'],
+  authors: [{ name: 'Octavio Sanchez' }],
+  creator: 'Octavio Sanchez',
   publisher: 'Chi-Rho Power & Strength',
-  metadataBase: new URL('https://yourdomain.com'),
+  metadataBase: new URL('https://www.chirhostrength.com'),
   openGraph: {
     title: 'Chi-Rho Power & Strength',
-    description: 'Prepare, Commit, Respond - A blog on strength training and purposeful living',
+    description: 'Strength coaching for men in Toledo and online. Are you stronger than you were last month?',
     siteName: 'Chi-Rho Power & Strength',
     images: [
       {

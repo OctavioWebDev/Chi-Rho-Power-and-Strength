@@ -1,12 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { FaCheck, FaDumbbell, FaMapMarkerAlt, FaUsers } from 'react-icons/fa';
+import { BarbellProgress, Checklist, Entry, Faq, LogTable, PageTitle, RateList, Sheet, Steps } from '@/components/log';
 
 // ─── Campaign config ────────────────────────────────────────────────────────
 const CAMPAIGN_GOAL = 65000;
-const DAYS_REMAINING = 60;
 // ────────────────────────────────────────────────────────────────────────────
 
 interface CampaignTotals {
@@ -36,9 +34,9 @@ const tiers: Array<{
     id: 'community-supporter',
     name: 'Community Supporter',
     price: '$25',
-    priceNote: 'one-time',
+    priceNote: 'once',
     description:
-      "Back the mission. You believe Toledo needs a real barbell gym and you want to help make it happen.",
+      "You think Toledo needs a real barbell gym and you want to help build it.",
     perks: [
       'Name on the Chi-Rho Barbell Club Founders Wall',
       'Exclusive "Founding Supporter" Discord role',
@@ -50,9 +48,9 @@ const tiers: Array<{
     id: 'supporter-plus',
     name: 'Supporter Plus',
     price: '$50',
-    priceNote: 'one-time',
+    priceNote: 'once',
     description:
-      'Everything in Community Supporter, plus gear to rep the gym before it exists.',
+      'Everything in Community Supporter, plus a shirt before the gym even exists.',
     perks: [
       'Everything in Community Supporter',
       'Exclusive founding t-shirt',
@@ -64,9 +62,9 @@ const tiers: Array<{
     id: 'founding-annual',
     name: 'Founding Annual Member',
     price: '$300',
-    priceNote: '/year — locked in for life',
+    priceNote: '/ year, locked for life',
     description:
-      'Full gym access for a year at the lowest rate this gym will ever offer. This price is locked in forever as long as you renew annually.',
+      'A year of gym access at the lowest rate this gym will ever have. Renew every year and it never goes up.',
     perks: [
       'Full gym access for 12 months',
       'Founding rate locked for life on renewal',
@@ -76,15 +74,15 @@ const tiers: Array<{
       'Chi-Rho Lifts app included',
     ],
     highlight: true,
-    badge: 'MOST POPULAR',
+    badge: 'Most picked',
   },
   {
     id: 'founding-monthly',
     name: 'Founding Monthly Member',
     price: '$25',
-    priceNote: '/month — rate locked for life',
+    priceNote: '/ month, locked for life',
     description:
-      'All the access, month to month. Your $25/month rate is locked for life.',
+      'Full access, month to month. $25 a month, locked for life.',
     perks: [
       'Full gym access, cancel anytime',
       '$25/month locked for life',
@@ -97,9 +95,9 @@ const tiers: Array<{
     id: 'founding-coaching',
     name: 'Founding Coaching Client',
     price: '$250',
-    priceNote: '/month',
+    priceNote: '/ month',
     description:
-      "Chi-Rho online coaching — and when the gym opens, $25/month of your coaching fee covers your membership. You train online now, in-person later.",
+      "Online coaching now. When the gym opens, $25 of it covers your membership, and you get first pick of in-person slots.",
     perks: [
       'Full Chi-Rho online coaching package',
       '$25/month gym membership credit at opening',
@@ -108,7 +106,7 @@ const tiers: Array<{
       'Founding member status for life',
       'Everything in Supporter Plus',
     ],
-    badge: 'BEST VALUE',
+    badge: 'Best value',
   },
 ];
 
@@ -134,28 +132,16 @@ const timeline = [
 export default function GymFundingPage() {
   const [loadingTier, setLoadingTier] = useState<TierId | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [totals, setTotals] = useState<CampaignTotals>({
-    totalRaisedDollars: 0,
-    totalBackers: 0,
-    percentFunded: 0,
-  });
+  const [totals, setTotals] = useState<{ raised: number | null; members: number | null }>({ raised: null, members: null });
 
   useEffect(() => {
     fetch('/api/gym/campaign')
       .then((res) => res.json())
-      .then((data) =>
-        setTotals({
-          totalRaisedDollars: data.totalRaisedDollars ?? 0,
-          totalBackers: data.totalBackers ?? 0,
-          percentFunded: data.percentFunded ?? 0,
-        })
-      )
+      .then((data) => setTotals({ raised: data.totalRaisedDollars ?? null, members: data.totalBackers ?? null }))
       .catch(() => {
-        // Leave totals at zero — the campaign section still renders fine.
+        // Leave totals empty; the bar shows $0.
       });
   }, []);
-
-  const progressPercent = totals.percentFunded;
 
   const handleCheckout = async (tierId: TierId) => {
     setLoadingTier(tierId);
@@ -190,297 +176,91 @@ export default function GymFundingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <main className="lg-wrap">
+      <Entry label="Barbell Club" sub="Founding members">
+        <PageTitle lede="Racks, bars, plates and platforms. No machines, no cardio decks. We're raising $65,000 through founding memberships to build Chi-Rho Barbell Club. Founding members get in first and keep the lowest rate this gym will ever have.">
+          Toledo needs a <em>barbell gym.</em>
+        </PageTitle>
+        <BarbellProgress raised={totals.raised} members={totals.members} goal={CAMPAIGN_GOAL} />
+      </Entry>
 
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-gray-900 to-gray-950">
-        <div className="max-w-5xl mx-auto px-4 text-center">
-          <p className="text-yellow-500 font-semibold tracking-widest uppercase text-sm mb-4">
-            Founding Member Campaign
-          </p>
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-            Help Build Toledo&apos;s First<br />
-            <span className="text-yellow-500">Dedicated Barbell Gym</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-4">
-            Chi-Rho Barbell Club. 100% Rogue equipment. Real coaching. No machines, no cardio decks, no nonsense.
-          </p>
-          <p className="text-gray-400 max-w-2xl mx-auto mb-10">
-            We&apos;re raising $65,000 through founding memberships to build, equip, and open a gym Toledo has never had. Be one of the first through the door.
-          </p>
-
-          {/* Progress bar */}
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 max-w-2xl mx-auto mb-8">
-            <div className="flex justify-between text-sm text-gray-400 mb-3">
-              <span>
-                <span className="text-white font-bold text-lg">${totals.totalRaisedDollars.toLocaleString()}</span> raised
-              </span>
-              <span>Goal: ${CAMPAIGN_GOAL.toLocaleString()}</span>
-            </div>
-            <div className="w-full bg-gray-800 rounded-full h-4 mb-4 overflow-hidden">
-              <div
-                className="bg-yellow-500 h-4 rounded-full transition-all duration-700"
-                style={{ width: `${Math.max(progressPercent, 1)}%` }}
-              />
-            </div>
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-yellow-400">{totals.totalBackers}</p>
-                <p className="text-xs text-gray-400">Founding Members</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-yellow-400">{progressPercent.toFixed(0)}%</p>
-                <p className="text-xs text-gray-400">Funded</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-yellow-400">{DAYS_REMAINING}</p>
-                <p className="text-xs text-gray-400">Days Remaining</p>
-              </div>
-            </div>
-          </div>
-
-          <a
-            href="#tiers"
-            className="inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-10 rounded-lg transition duration-200 shadow-lg hover:scale-105 transform text-lg"
-          >
-            Become a Founding Member
-          </a>
-        </div>
-      </section>
-
-      {/* ── Why Toledo / The Problem ─────────────────────────────────────── */}
-      <section className="py-16 bg-black">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-yellow-400 mb-8 text-center">Toledo Deserves a Real Gym</h2>
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            {[
-              { stat: '426K', label: 'Toledo metro area residents' },
-              { stat: '36.9%', label: 'adult obesity rate — above national average' },
-              { stat: '0', label: 'dedicated barbell-first gyms in Toledo' },
-            ].map((item) => (
-              <div key={item.stat} className="bg-gray-900 border border-gray-800 rounded-xl p-6 text-center">
-                <p className="text-4xl font-extrabold text-yellow-500 mb-2">{item.stat}</p>
-                <p className="text-gray-300 text-sm">{item.label}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-gray-300 text-lg text-center max-w-2xl mx-auto">
-            Toledo has big-box gyms and cardio studios. What it doesn&apos;t have is a place built for people who want to squat, bench, and deadlift. Chi-Rho Barbell Club is that place.
-          </p>
-        </div>
-      </section>
-
-      {/* ── Founding Member Tiers ────────────────────────────────────────── */}
-      <section id="tiers" className="py-16 bg-gray-950">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-yellow-400 mb-4">
-              Choose Your Founding Membership
-            </h2>
-            <div className="w-24 h-1 bg-yellow-500 mx-auto mb-6" />
-            <p className="text-gray-300 max-w-2xl mx-auto">
-              Every tier directly funds equipment, space, and buildout. Your founding rate is locked in — this is the lowest price this gym will ever offer.
-            </p>
-            <p className="text-gray-400 text-sm max-w-2xl mx-auto mt-3">
-              Founding rates: $25/month or $300/year. After the campaign, memberships are $35/month or $300/year. Every membership, coaching plan, and class includes the Chi-Rho Lifts app.
-            </p>
-          </div>
-
-          {error && (
-            <div className="max-w-2xl mx-auto mb-8 p-4 bg-red-900/20 border border-red-500/30 text-red-400 rounded-lg text-center">
-              {error}
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {tiers.map((tier) => (
-              <div
-                key={tier.id}
-                className={`bg-gray-900 rounded-xl overflow-hidden border-2 flex flex-col relative transition-all hover:border-yellow-500/60 ${
-                  tier.highlight ? 'border-yellow-500' : 'border-gray-800'
-                }`}
+      <Entry label="Memberships" id="tiers">
+        <h2 className="lg-h2">Pick your founding membership</h2>
+        <p className="lg-lede lg-muted">
+          Founding rates: $25 a month or $300 a year, locked for life. After the campaign it&apos;s $35 a month. Every
+          membership, coaching plan and class includes the Chi-Rho Lifts app.
+        </p>
+        {error ? <p className="lg-error" role="alert">{error}</p> : null}
+        <RateList
+          items={tiers.map((t) => ({
+            name: t.name,
+            price: t.price,
+            unit: t.priceNote,
+            tag: t.badge,
+            description: (
+              <>
+                {t.description}
+                <Checklist items={t.perks} />
+              </>
+            ),
+            action: (
+              <button
+                type="button"
+                className="lg-link"
+                onClick={() => handleCheckout(t.id)}
+                disabled={loadingTier !== null}
               >
-                {tier.badge && (
-                  <div className="absolute top-0 right-0 bg-yellow-500 text-gray-900 font-bold px-3 py-1 text-xs">
-                    {tier.badge}
-                  </div>
-                )}
+                {loadingTier === t.id ? 'Opening checkout…' : `Back this tier · ${t.price}`}
+              </button>
+            ),
+          }))}
+        />
+      </Entry>
 
-                <div className="p-6 border-b border-gray-800">
-                  <h3 className="text-xl font-bold text-white mb-1">{tier.name}</h3>
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-3xl font-extrabold text-yellow-500">{tier.price}</span>
-                    <span className="text-gray-400 text-sm">{tier.priceNote}</span>
-                  </div>
-                  <p className="text-gray-300 text-sm">{tier.description}</p>
-                </div>
+      <Entry label="The order">
+        <h2 className="lg-h2">What your money buys</h2>
+        <Sheet title="Equipment order" caption="$50,000 equipment · $15,000 build-out" className="lg-mt">
+          <LogTable
+            columns={[
+              { key: 'item', label: 'Item' },
+              { key: 'note', label: 'Note', tone: 'note' },
+            ]}
+            rows={equipment.map((e) => ({ item: e.item, note: e.desc }))}
+          />
+          <p className="lg-note">Every dollar tracked. Founders get the updates first.</p>
+        </Sheet>
+      </Entry>
 
-                <div className="p-6 flex-1 flex flex-col">
-                  <ul className="space-y-2 mb-6 flex-1">
-                    {tier.perks.map((perk, i) => (
-                      <li key={i} className="flex items-start text-sm">
-                        <FaCheck className="w-4 h-4 text-yellow-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-300">{perk}</span>
-                      </li>
-                    ))}
-                  </ul>
+      <Entry label="The plan">
+        <Steps
+          items={timeline.map((t) => ({
+            title: t.phase,
+            text: t.desc,
+            here: t.status === 'active',
+            note: t.status === 'active' ? "We're here" : undefined,
+          }))}
+        />
+        <p style={{ marginTop: 24 }}>
+          <a className="lg-btn" href="#tiers">Become a founding member</a>
+        </p>
+      </Entry>
 
-                  <button
-                    onClick={() => handleCheckout(tier.id)}
-                    disabled={loadingTier !== null}
-                    className={`w-full font-bold py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 ${
-                      tier.highlight
-                        ? 'bg-yellow-500 hover:bg-yellow-600 text-gray-900'
-                        : 'bg-gray-800 hover:bg-gray-700 text-white'
-                    } disabled:opacity-50 disabled:cursor-not-allowed`}
-                  >
-                    {loadingTier === tier.id ? (
-                      <>
-                        <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Processing...
-                      </>
-                    ) : (
-                      'Back This Tier'
-                    )}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Equipment ───────────────────────────────────────────────────── */}
-      <section className="py-16 bg-black">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-yellow-400 mb-8 text-center">
-            <FaDumbbell className="inline mr-3 mb-1" />
-            What Your Money Buys
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            {equipment.map((item) => (
-              <div key={item.item} className="bg-gray-900 border border-gray-800 rounded-lg p-4 flex items-start gap-3">
-                <FaCheck className="text-yellow-500 mt-1 flex-shrink-0" />
-                <div>
-                  <p className="text-white font-semibold">{item.item}</p>
-                  <p className="text-gray-400 text-sm">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-6 text-center">
-            <p className="text-yellow-400 font-bold text-lg mb-1">Budget Transparency</p>
-            <p className="text-gray-300">
-              $50,000 equipment + $15,000 buildout (flooring, platforms, deposits). Every dollar is tracked. Updates go to founding members first.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Timeline ────────────────────────────────────────────────────── */}
-      <section className="py-16 bg-gray-950">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-yellow-400 mb-10 text-center">The Roadmap</h2>
-          <div className="space-y-4">
-            {timeline.map((step, i) => (
-              <div
-                key={step.phase}
-                className={`flex items-start gap-4 p-5 rounded-xl border ${
-                  step.status === 'active'
-                    ? 'bg-yellow-500/10 border-yellow-500/40'
-                    : 'bg-gray-900 border-gray-800'
-                }`}
-              >
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm ${
-                    step.status === 'active'
-                      ? 'bg-yellow-500 text-gray-900'
-                      : 'bg-gray-800 text-gray-400'
-                  }`}
-                >
-                  {i + 1}
-                </div>
-                <div>
-                  <p className={`font-bold ${step.status === 'active' ? 'text-yellow-400' : 'text-white'}`}>
-                    {step.phase}
-                    {step.status === 'active' && <span className="ml-2 text-xs text-yellow-500 uppercase tracking-wider">← We are here</span>}
-                  </p>
-                  <p className="text-gray-400 text-sm mt-1">{step.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FAQ ─────────────────────────────────────────────────────────── */}
-      <section className="py-16 bg-black">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-yellow-400 mb-8 text-center">Common Questions</h2>
-          <div className="space-y-4">
-            {[
-              {
-                q: "What if the campaign doesn't hit $65K?",
-                a: "Founding members will be contacted directly. We'll either refund in full or, if we're close, discuss how to bridge the gap. Full transparency, no games.",
-              },
-              {
-                q: "Where will the gym be located?",
-                a: "Toledo, Ohio. Exact location is in negotiation — founding members get location updates before public announcements.",
-              },
-              {
-                q: "I'm a beginner. Is this gym for me?",
-                a: "Yes. Chi-Rho is built for people who want to get strong — beginners included. Coaches on staff, no judgment culture. The opposite of a globo-gym.",
-              },
-              {
-                q: "What's the Chi-Rho Lifts app?",
-                a: "Chi-Rho Lifts is the training app built for this gym: log every set, track your progress and nutrition, and train from the program your coach builds. It's included with every membership, coaching plan, and class.",
-              },
-              {
-                q: "Is my founding monthly rate really locked forever?",
-                a: "Yes. Your founding rate is locked for life, as long as you keep your membership active. If you cancel and rejoin later, you'll pay the standard rate.",
-              },
-              {
-                q: "Can I get a refund if something falls through?",
-                a: "If the gym doesn't open within 18 months, founding members receive full refunds. One-time tiers (Community Supporter, Supporter Plus) are non-refundable contributions to the mission.",
-              },
-            ].map((faq) => (
-              <div key={faq.q} className="bg-gray-900 border border-gray-800 rounded-lg p-5">
-                <p className="font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-gray-400 text-sm">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Final CTA ───────────────────────────────────────────────────── */}
-      <section className="py-16 bg-gradient-to-b from-gray-900 to-black text-center">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            This Gym Gets Built With You
-          </h2>
-          <div className="w-24 h-1 bg-yellow-500 mx-auto mb-6" />
-          <p className="text-gray-300 text-lg mb-8 max-w-xl mx-auto">
-            Every founding member is an investor in this community. Your name on the wall. Your barbell in the rack. Your gym.
-          </p>
-          <a
-            href="#tiers"
-            className="inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-10 rounded-lg transition duration-200 shadow-lg hover:scale-105 transform text-lg"
-          >
-            Become a Founding Member
-          </a>
-          <p className="text-gray-500 text-sm mt-4">
-            Questions?{' '}
-            <a href="mailto:chirhostrength@gmail.com" className="text-yellow-400 hover:underline">
-              chirhostrength@gmail.com
-            </a>
-          </p>
-        </div>
-      </section>
-    </div>
+      <Entry label="Questions">
+        <Faq
+          groups={[
+            {
+              items: [
+                { q: "What if the campaign doesn't hit $65K?", a: "I'll contact founding members directly. Either a full refund or, if we're close, we talk about how to close the gap. No games." },
+                { q: 'Where will the gym be?', a: 'Toledo, Ohio. The exact location is in negotiation. Founding members hear first.' },
+                { q: "I'm a beginner. Is this gym for me?", a: 'Yes. It\'s built for people who want to get strong, beginners included. Coaches on the floor.' },
+                { q: "What's the Chi-Rho Lifts app?", a: "The training app built for this gym. Log every set, track progress and nutrition, and run the program your coach builds. It's included with every membership, coaching plan and class." },
+                { q: 'Is my founding rate really locked forever?', a: "Yes, as long as your membership stays active. Cancel and rejoin later and you pay the standard rate." },
+                { q: 'Can I get a refund if it falls through?', a: "If the gym doesn't open within 18 months, founding members get full refunds. The one-time tiers (Community Supporter, Supporter Plus) are contributions and aren't refundable." },
+              ],
+            },
+          ]}
+        />
+      </Entry>
+    </main>
   );
 }

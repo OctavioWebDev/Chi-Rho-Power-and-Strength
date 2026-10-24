@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { ButtonLink, Entry, PageTitle } from '@/components/log';
 
 export default function SuccessContent() {
   const searchParams = useSearchParams();
@@ -49,84 +49,42 @@ export default function SuccessContent() {
   };
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full space-y-4 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="text-gray-700">Processing your purchase...</p>
-        </div>
-      </div>
-    );
+    return <p className="lg-wrap lg-small" style={{ paddingBlock: 60 }}>Processing your purchase…</p>;
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="max-w-md w-full space-y-4 text-center bg-white p-8 rounded-lg shadow-lg">
-          <div className="text-red-600 text-5xl mb-4">⚠️</div>
-          <h1 className="text-2xl font-bold text-red-600">Error</h1>
-          <p className="text-gray-700">{error}</p>
-          <div className="pt-4 space-y-2">
-            <p className="text-sm text-gray-600">Session ID: {sessionId || 'Not provided'}</p>
-            <p className="text-sm text-gray-600">Template ID: {templateId || 'Not provided'}</p>
-          </div>
-          <div className="pt-4">
-            <Link
-              href="/templates"
-              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Back to Templates
-            </Link>
-          </div>
-          <div className="pt-2">
-            <a
-              href="mailto:support@chirhopowerstrength.com"
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Contact Support
-            </a>
-          </div>
-        </div>
-      </div>
+      <main className="lg-wrap">
+        <Entry label="Purchase" sub="Problem">
+          <PageTitle lede={error}>Something went wrong.</PageTitle>
+          <p className="lg-small">Session: {sessionId || 'Not provided'} · Program: {templateId || 'Not provided'}</p>
+          <p className="lg-small">
+            Email <span className="lg-sel">chirhostrength@gmail.com</span> with those two lines and I&apos;ll sort it out.
+          </p>
+          <ButtonLink href="/templates" variant="line">Back to programs</ButtonLink>
+        </Entry>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="max-w-md w-full space-y-6 text-center bg-white p-8 rounded-lg shadow-lg">
-        <div className="text-green-600 text-6xl mb-4">✓</div>
-        <h1 className="text-3xl font-bold text-green-600">Thank You!</h1>
-        <p className="text-gray-700 text-lg">Your purchase was successful!</p>
-        <p className="text-gray-600">Your training program should download automatically.</p>
-        
-        <div className="pt-6 space-y-3">
-          <button
-            onClick={handleManualDownload}
-            className="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
-          >
-            Download Template
+    <main className="lg-wrap">
+      <Entry label="Purchase" sub="Done">
+        <PageTitle lede="Your program should download on its own. If it didn't, use the button below.">
+          Got it. <em>Now go lift.</em>
+        </PageTitle>
+        <div className="lg-ctas">
+          <button type="button" className="lg-btn" onClick={handleManualDownload}>
+            Download the program
           </button>
-          
-          <p className="text-sm text-gray-500">
-            Didn't receive your download? Click the button above or contact support.
-          </p>
+          <ButtonLink href="/templates" variant="line">More programs</ButtonLink>
         </div>
-
-        <div className="pt-6 border-t border-gray-200">
-          <Link
-            href="/templates"
-            className="inline-block px-6 py-3 text-gray-700 hover:text-gray-900 transition-colors"
-          >
-            ← Browse More Templates
-          </Link>
-        </div>
-
-        <div className="pt-4 text-sm text-gray-500">
-          <p>Order Details:</p>
-          <p className="font-mono text-xs mt-1">Session: {sessionId}</p>
-          <p className="font-mono text-xs">Template: {templateId}</p>
-        </div>
-      </div>
-    </div>
+        <p className="lg-small" style={{ marginTop: 22 }}>
+          Order: {sessionId} · {templateId}
+          <br />
+          Trouble? Email <span className="lg-sel">chirhostrength@gmail.com</span>.
+        </p>
+      </Entry>
+    </main>
   );
 }

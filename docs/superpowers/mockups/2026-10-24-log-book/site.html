@@ -1,0 +1,1142 @@
+<title>Chi-Rho Plain Log Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: a coach's log book on a dark desk. Section names are label-maker
+   tape in a left margin; anything you'd write on (logs, programs, intake,
+   order sheets) is a grid-paper page clipped to a board, marked up by hand. */
+:root {
+  --iron: #0B0A08;      /* the desk */
+  --plate: #15130F;     /* raised dark surface */
+  --rule: #2A261F;      /* lines on dark */
+  --chalk: #F4F1EA;     /* text on dark, label tape */
+  --dust: #9C968A;      /* secondary text on dark */
+  --brass: #EAB308;     /* you / do this */
+  --paper: #EDE8DC;     /* log pages */
+  --ink: #1A1712;       /* print on paper */
+  --ink-2: #6D675C;     /* faint print on paper */
+  --grid: rgba(26,23,18,.09);
+  --pencil: #8A6A12;    /* numbers written in */
+  --pen-blue: #1D4F91;  /* answers */
+  --pen-red: #9B1C1C;   /* coach's notes */
+  --pen-green: #2F6B2F; /* checks */
+  --display: "Barlow Condensed", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --hand: "Caveat", "Bradley Hand", "Segoe Print", cursive;
+  --gutter: 168px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--iron); color: var(--chalk); font-family: var(--body); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 60; opacity: .07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+a { color: inherit; }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+p { margin: 0 0 1em; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 24px; }
+h1, h2, h3 { font-family: var(--display); text-transform: uppercase; text-wrap: balance; margin: 0; line-height: .94; }
+h1 { font-weight: 800; font-size: clamp(50px, 7vw, 104px); letter-spacing: -.01em; }
+h2 { font-weight: 800; font-size: clamp(36px, 4.6vw, 64px); }
+h3 { font-weight: 700; font-size: 25px; letter-spacing: .02em; }
+h1 em, h2 em { font-style: normal; color: var(--brass); }
+.muted { color: var(--dust); }
+.lede { font-size: 20px; max-width: 36em; margin: 22px 0 28px; }
+.small { font-size: 15px; color: var(--dust); }
+
+/* ---------- header ---------- */
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 40; background: rgba(11,10,8,.94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); }
+header.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 18px; height: 68px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; flex: none; }
+.brand svg { width: 46px; height: 46px; }
+.brand b { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: .04em; text-transform: uppercase; line-height: 1; display: block; }
+.brand small { display: block; font-family: var(--display); font-weight: 500; font-size: 13px; letter-spacing: .14em; color: var(--dust); text-transform: uppercase; }
+nav.main { display: flex; gap: 22px; font-family: var(--display); font-weight: 600; font-size: 16px; letter-spacing: .06em; text-transform: uppercase; }
+nav.main a { text-decoration: none; color: var(--dust); padding-block: 4px; border-bottom: 2px solid transparent; }
+nav.main a:hover { color: var(--chalk); }
+nav.main a[aria-current="page"] { color: var(--chalk); border-bottom-color: var(--brass); }
+.top-right { display: flex; align-items: center; gap: 12px; }
+.apply { font-family: var(--display); font-weight: 700; font-size: 16px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; background: var(--brass); color: var(--iron); padding: 9px 16px; border-radius: 3px; white-space: nowrap; }
+.menu-btn { display: none; background: none; border: 1px solid var(--rule); color: var(--chalk); font-family: var(--display); font-weight: 600; font-size: 16px; letter-spacing: .08em; text-transform: uppercase; padding: 8px 12px; border-radius: 3px; cursor: pointer; }
+
+/* ---------- pages + ledger rows ---------- */
+.page { display: none; }
+.page.on { display: block; }
+.entry { display: grid; grid-template-columns: var(--gutter) minmax(0, 1fr); }
+.tape {
+  align-self: start; justify-self: start; margin-top: 42px; padding: 5px 10px 4px; background: var(--chalk); color: var(--iron);
+  font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: .18em; text-transform: uppercase; line-height: 1.25;
+  transform: rotate(-2deg); box-shadow: 0 2px 0 rgba(0,0,0,.6); max-width: calc(var(--gutter) - 20px);
+}
+.tape span { display: block; color: var(--pencil); font-size: 12px; }
+.entry > .body { padding: 38px 0 52px 32px; min-width: 0; }
+.entry + .entry > .body { border-top: 1px dashed var(--rule); }
+
+/* ---------- paper ---------- */
+.paper {
+  position: relative; background-color: var(--paper); color: var(--ink); border-radius: 3px; padding: 32px 24px 18px;
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 22px 22px; box-shadow: 0 24px 50px -20px rgba(0,0,0,.95);
+}
+.paper::before { content: ""; position: absolute; top: -14px; left: 50%; width: 92px; height: 26px; transform: translateX(-50%); background: linear-gradient(#55524b, #2b2925); border-radius: 4px 4px 8px 8px; box-shadow: 0 3px 0 #111; }
+.tilt-l { transform: rotate(-.7deg); }
+.tilt-r { transform: rotate(.9deg); }
+.paper h3 { color: var(--ink); }
+.paper .small, .paper .muted { color: var(--ink-2); }
+.hand { font-family: var(--hand); font-weight: 500; text-transform: none; letter-spacing: 0; }
+.pen-blue { color: var(--pen-blue); } .pen-red { color: var(--pen-red); } .pen-green { color: var(--pen-green); } .pencil { color: var(--pencil); }
+.paper-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; margin-bottom: 4px; font-family: var(--display); }
+.paper-head b { font-weight: 700; font-size: 22px; text-transform: uppercase; letter-spacing: .04em; }
+.paper-head small { font-size: 15px; letter-spacing: .1em; color: var(--ink-2); text-transform: uppercase; }
+
+/* log tables (on paper) */
+.logtbl { width: 100%; border-collapse: collapse; font-family: var(--display); font-variant-numeric: tabular-nums; }
+.logtbl th { font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); text-align: left; padding: 10px 12px 8px 0; border-bottom: 1px solid var(--ink); }
+.logtbl td { padding: 10px 12px 10px 0; border-bottom: 1px solid var(--grid); font-size: 21px; font-weight: 600; white-space: nowrap; }
+.logtbl .r { text-align: right; }
+.logtbl .w { color: var(--pencil); font-weight: 700; }
+.logtbl .h { font-family: var(--hand); font-weight: 500; font-size: 26px; white-space: normal; }
+.logtbl .day { color: var(--ink-2); font-weight: 500; font-size: 16px; letter-spacing: .1em; text-transform: uppercase; }
+.scroll { overflow-x: auto; }
+.scroll .logtbl { min-width: 600px; }
+.note { font-family: var(--hand); font-size: 26px; line-height: 1.15; margin: 12px 0 4px; }
+
+/* ---------- buttons/links ---------- */
+.ctas { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; }
+.btn { display: inline-block; font-family: var(--display); font-weight: 700; font-size: 19px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; padding: 14px 22px; border-radius: 3px; background: var(--brass); color: var(--iron); border: 0; cursor: pointer; }
+.link { font-family: var(--display); font-weight: 600; font-size: 19px; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; border-bottom: 2px solid var(--brass); padding-bottom: 2px; }
+.paper .link { border-color: var(--pencil); }
+
+/* ---------- hero ---------- */
+.hero .body { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr); gap: 48px; align-items: start; padding-top: 56px; }
+
+/* ---------- seal ---------- */
+.name .body { display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 44px; align-items: center; }
+.seal { width: 100%; max-width: 190px; height: auto; }
+.big { font-size: clamp(20px, 2vw, 24px); line-height: 1.5; max-width: 32em; margin: 18px 0 0; }
+
+/* ---------- letter / facts ---------- */
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 330px); gap: 56px; }
+.letter { font-size: 19px; line-height: 1.62; max-width: 36em; }
+.sign { font-family: var(--display); font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: .06em; }
+.sign small { display: block; font-weight: 500; font-size: 15px; color: var(--dust); letter-spacing: .12em; }
+.facts { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--chalk); align-self: start; }
+.facts li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 16px; }
+.facts li b { font-family: var(--display); font-weight: 700; font-size: 22px; color: var(--brass); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.photo { position: relative; margin-top: 22px; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; border-radius: 2px; background: radial-gradient(120% 80% at 30% 20%, #4a4740 0%, #1c1a16 55%, #0e0d0b 100%); filter: grayscale(1) contrast(1.15); }
+.photo::before { content: ""; position: absolute; left: -10%; right: -10%; top: 58%; height: 10px; background: linear-gradient(#bdb8ad, #57534b); transform: rotate(-8deg); }
+.photo::after { content: ""; position: absolute; width: 46%; aspect-ratio: 1; border-radius: 50%; left: 56%; top: 31%; background: radial-gradient(circle, #0e0d0b 0 14%, #3c3933 15% 60%, #24221e 61% 100%); box-shadow: -26px 6px 0 -4px #2e2b26; }
+.photo.wide { aspect-ratio: 16 / 7; margin-top: 0; }
+figcaption { font-size: 13px; color: var(--dust); margin-top: 8px; }
+
+/* ---------- questions / intake ---------- */
+.asks { list-style: none; margin: 26px 0 0; padding: 34px 26px 14px; max-width: 880px; }
+.asks li { font-family: var(--display); font-weight: 700; font-size: clamp(24px, 3vw, 38px); text-transform: uppercase; line-height: 1.05; padding: 12px 0; border-bottom: 1px solid var(--grid); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 20px; }
+.asks .hand { font-size: clamp(24px, 2.6vw, 32px); }
+.after { margin: 22px 0 0; font-size: 18px; }
+
+/* ---------- myths ---------- */
+.myths { list-style: none; margin: 0; padding: 0; display: grid; gap: 30px; }
+.myths li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 32px; align-items: baseline; padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
+.myths li:last-child { border-bottom: 0; padding-bottom: 0; }
+.myths q { font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.05; color: var(--dust); }
+.myths p { margin: 0; font-size: 19px; }
+
+/* ---------- rate sheet ---------- */
+.rates { list-style: none; margin: 24px 0 0; padding: 0; border-top: 2px solid var(--chalk); }
+.rates > li { padding: 22px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 24px; }
+.rates .name { display: flex; align-items: baseline; gap: 12px; min-width: 0; }
+.rates .name h3 { white-space: nowrap; }
+.rates .name::after { content: ""; flex: 1; border-bottom: 2px dotted var(--rule); transform: translateY(-6px); min-width: 20px; }
+.rates .price { font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; color: var(--brass); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.rates .price small { font-weight: 500; font-size: 16px; color: var(--dust); letter-spacing: .06em; }
+.rates .what { grid-column: 1 / -1; color: var(--dust); font-size: 16px; max-width: 48em; margin: 0; }
+.where { font-family: var(--display); font-weight: 600; font-size: 14px; letter-spacing: .14em; color: var(--chalk); text-transform: uppercase; margin-right: 10px; }
+.rates .more { grid-column: 1 / -1; }
+
+/* ---------- checklists ---------- */
+.checks { list-style: none; margin: 0; padding: 0; }
+.checks li { position: relative; padding: 9px 0 9px 34px; border-bottom: 1px solid var(--rule); }
+.checks li::before { content: "✓"; position: absolute; left: 4px; top: 2px; font-family: var(--hand); font-size: 28px; color: var(--brass); }
+.paper .checks li { border-color: var(--grid); }
+.paper .checks li::before { color: var(--pen-green); }
+
+/* ---------- package cards on paper ---------- */
+.pkgs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px; margin-top: 34px; }
+.pkg h3 { font-size: 30px; }
+.pkg .price { font-family: var(--display); font-weight: 800; font-size: 46px; color: var(--pencil); line-height: 1; margin: 10px 0 4px; font-variant-numeric: tabular-nums; }
+.pkg .price small { font-size: 18px; color: var(--ink-2); font-weight: 500; }
+.pkg .for { margin: 14px 0 18px; font-size: 16px; }
+.pkg .stamp { position: absolute; top: 18px; right: 18px; font-family: var(--hand); font-size: 24px; color: var(--pen-red); transform: rotate(6deg); border: 2px solid var(--pen-red); border-radius: 6px; padding: 0 8px; line-height: 1.3; }
+
+/* ---------- offers ---------- */
+.offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 22px; }
+.offers div { border-top: 2px solid var(--chalk); padding-top: 12px; }
+.offers b { font-family: var(--display); font-weight: 800; font-size: 34px; color: var(--brass); display: block; line-height: 1; margin-bottom: 6px; }
+.offers p { color: var(--dust); font-size: 16px; margin: 0; }
+
+/* ---------- FAQ ---------- */
+.faq { border-top: 2px solid var(--chalk); max-width: 900px; }
+.faq details { border-bottom: 1px solid var(--rule); }
+.faq summary { cursor: pointer; list-style: none; padding: 16px 40px 16px 0; position: relative; font-family: var(--display); font-weight: 700; font-size: 23px; text-transform: uppercase; line-height: 1.1; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 6px; top: 8px; font-family: var(--hand); font-size: 36px; color: var(--brass); }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { color: var(--dust); max-width: 46em; margin: -4px 0 18px; }
+.faq h3.group { font-size: 15px; letter-spacing: .16em; color: var(--brass); padding: 26px 0 6px; }
+
+/* ---------- apply form ---------- */
+.form { max-width: 900px; padding: 40px 30px 28px; }
+.form .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 28px; }
+.form .full { grid-column: 1 / -1; }
+.form label { display: block; font-family: var(--display); font-weight: 700; font-size: 19px; text-transform: uppercase; letter-spacing: .02em; color: var(--ink); }
+.form label small { display: block; font-weight: 500; font-size: 13px; letter-spacing: .1em; color: var(--ink-2); }
+.form input, .form textarea, .form select {
+  width: 100%; background: transparent; border: 0; border-bottom: 1.5px solid var(--ink); border-radius: 0; padding: 4px 2px; margin-top: 2px;
+  font-family: var(--hand); font-size: 26px; color: var(--pen-blue); color-scheme: light;
+}
+.form textarea { resize: vertical; min-height: 98px; line-height: 32px; border-bottom: 0; background-image: repeating-linear-gradient(transparent 0 31px, var(--ink) 31px 32px); padding-top: 0; }
+.form select { font-family: var(--display); font-weight: 600; font-size: 20px; }
+.form fieldset { border: 0; padding: 0; margin: 0; }
+.form .legend { font-family: var(--display); font-weight: 700; font-size: 19px; text-transform: uppercase; color: var(--ink); padding: 0; }
+.form .opts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 8px; }
+.form .opts label { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 600; }
+.form .opts input { width: 20px; height: 20px; accent-color: var(--pen-blue); margin: 0; }
+.form .lifts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.form .actions { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+.received { display: none; margin-top: 18px; font-family: var(--hand); font-size: 30px; color: var(--pen-red); transform: rotate(-2deg); }
+.form.sent .received { display: block; }
+
+/* ---------- classes ---------- */
+.spots { font-family: var(--hand); font-size: 24px; color: var(--pen-red); }
+
+/* ---------- campaign ---------- */
+.raise { margin-top: 26px; max-width: 900px; }
+.raise .nums { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 30px; font-family: var(--display); }
+.raise .nums b { font-weight: 800; font-size: 46px; color: var(--brass); line-height: 1; font-variant-numeric: tabular-nums; }
+.raise .nums span { display: block; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--dust); }
+.barbell { position: relative; height: 60px; margin: 22px 0 6px; }
+.barbell .shaft { position: absolute; left: 0; right: 0; top: 26px; height: 8px; background: linear-gradient(#cfcac0, #6b665c); border-radius: 4px; }
+.barbell .fill { position: absolute; left: 0; top: 22px; height: 16px; width: 0%; background: var(--brass); border-radius: 3px; }
+.barbell .collar { position: absolute; top: 14px; width: 12px; height: 32px; background: #8d887e; border-radius: 2px; }
+.barbell .collar.l { left: 0; } .barbell .collar.r { right: 0; }
+.ticks { display: flex; justify-content: space-between; font-family: var(--display); font-size: 14px; color: var(--dust); font-variant-numeric: tabular-nums; }
+.order .logtbl td:first-child { width: 4em; color: var(--pencil); }
+.road { list-style: none; margin: 0; padding: 0; counter-reset: s; max-width: 760px; }
+.road li { counter-increment: s; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.road li::before { content: counter(s); font-family: var(--display); font-weight: 800; font-size: 38px; line-height: 1; color: var(--rule); }
+.road li.here::before { color: var(--brass); }
+.road b { font-family: var(--display); font-weight: 700; font-size: 22px; text-transform: uppercase; }
+.road .hand { font-size: 24px; color: var(--brass); margin-left: 10px; }
+.road p { color: var(--dust); margin: 2px 0 0; font-size: 16px; }
+
+/* ---------- book ---------- */
+.bookrow { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 56px; align-items: center; }
+.cover { aspect-ratio: 2 / 3; max-width: 100%; background: var(--chalk); color: var(--iron); padding: 22px 20px; border-radius: 2px 6px 6px 2px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: -8px 0 0 -2px #c9c4b8 inset, 0 30px 50px -24px rgba(0,0,0,.9); transform: rotate(-2deg); }
+.cover b { font-family: var(--display); font-weight: 800; font-size: 54px; line-height: .86; text-transform: uppercase; }
+.cover small { font-family: var(--display); font-weight: 600; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; }
+.cover.dark { background: #1f1c17; color: var(--chalk); box-shadow: -8px 0 0 -2px #0f0e0b inset, 0 30px 50px -24px rgba(0,0,0,.9); transform: rotate(1.5deg); }
+.cover.dark b { color: var(--brass); font-size: 46px; }
+.pull { font-family: var(--display); font-weight: 700; font-size: clamp(26px, 2.8vw, 36px); line-height: 1.1; text-transform: uppercase; max-width: 24em; margin: 0; }
+.pull::before { content: "\201C"; color: var(--brass); } .pull::after { content: "\201D"; color: var(--brass); }
+
+/* ---------- story ---------- */
+.crossed { list-style: none; margin: 0; padding: 30px 24px 12px; max-width: 820px; }
+.crossed li { padding: 12px 0; border-bottom: 1px solid var(--grid); }
+.crossed s { font-family: var(--display); font-weight: 700; font-size: 24px; text-transform: uppercase; text-decoration-color: var(--pen-red); text-decoration-thickness: 3px; color: var(--ink); }
+.crossed .hand { display: block; font-size: 24px; color: var(--pen-red); line-height: 1.1; margin-top: 2px; }
+.dodont { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px; }
+.nots li::before { content: "✕"; color: var(--dust); }
+
+/* ---------- articles ---------- */
+.articles { list-style: none; margin: 18px 0 0; padding: 0; border-top: 2px solid var(--chalk); }
+.articles li { display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 20px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+.articles time, .articles .len { font-family: var(--display); font-size: 16px; letter-spacing: .08em; color: var(--dust); text-transform: uppercase; font-variant-numeric: tabular-nums; }
+.articles a { text-decoration: none; font-family: var(--display); font-weight: 700; font-size: 26px; text-transform: uppercase; line-height: 1.05; }
+.articles a:hover { color: var(--brass); }
+.articles p { margin: 4px 0 0; color: var(--dust); font-size: 16px; }
+.post { max-width: 40em; font-size: 19px; line-height: 1.65; }
+.post h2 { font-size: clamp(30px, 3.4vw, 42px); margin: 40px 0 14px; }
+.post .paper { margin: 28px 0; }
+.byline { font-family: var(--display); font-size: 16px; letter-spacing: .1em; text-transform: uppercase; color: var(--dust); }
+
+/* ---------- programs ---------- */
+.lvl { font-family: var(--hand); font-size: 24px; color: var(--brass); margin-left: 8px; text-transform: none; letter-spacing: 0; }
+
+/* ---------- footer ---------- */
+footer { padding-block: 44px 64px; color: var(--dust); font-size: 16px; border-top: 1px solid var(--rule); margin-top: 20px; }
+footer .wrap { display: grid; grid-template-columns: var(--gutter) repeat(4, minmax(0, 1fr)); gap: 24px; }
+footer b { display: block; font-family: var(--display); font-weight: 600; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; color: var(--chalk); margin-bottom: 8px; }
+footer p { margin: 0; line-height: 1.8; }
+footer a { text-decoration: none; } footer a:hover { color: var(--chalk); }
+.sel { user-select: all; color: var(--chalk); }
+
+/* ---------- small screens ---------- */
+@media (max-width: 1020px) {
+  nav.main { display: none; position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; gap: 0; background: var(--iron); border-bottom: 1px solid var(--rule); padding: 8px 24px 16px; }
+  nav.main.open { display: flex; }
+  nav.main a { padding: 12px 0; border-bottom: 1px solid var(--rule); font-size: 20px; }
+  .menu-btn { display: inline-block; }
+}
+@media (max-width: 900px) {
+  .hero .body, .two, .bookrow, .name .body, .pkgs, .dodont { grid-template-columns: minmax(0, 1fr); }
+  .name .body { gap: 20px; } .seal { max-width: 120px; }
+  .cover { max-width: 210px; }
+  .myths li { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .offers { grid-template-columns: minmax(0, 1fr); }
+  footer .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  footer .wrap > :first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 680px) {
+  body { font-size: 16px; }
+  .wrap { padding-inline: 16px; }
+  .entry { grid-template-columns: minmax(0, 1fr); }
+  .tape { margin-top: 30px; max-width: none; }
+  .entry > .body { padding: 18px 0 40px; }
+  .entry + .entry > .body { border-top: 0; }
+  .hero .body { padding-top: 18px; gap: 36px; }
+  .tilt-l, .tilt-r { transform: none; }
+  .paper { padding-inline: 16px; }
+  .rates .name h3 { white-space: normal; }
+  .rates .name::after { display: none; }
+  .articles li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .articles .len { display: none; }
+  .form .grid, .form .lifts { grid-template-columns: minmax(0, 1fr); }
+  .brand small { display: none; }
+  .apply { padding: 8px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+<style>
+/* Toned down: flat sheets, no tilt, no clips, no tape, no handwriting. The log is plain. */
+.tilt-l, .tilt-r { transform: none !important; }
+.paper::before { display: none; }
+.paper { border-radius: 2px; box-shadow: none; background-size: 24px 24px; background-image: linear-gradient(var(--grid) 1px, transparent 1px); }
+.tape { background: none; color: var(--dust); transform: none; box-shadow: none; padding: 0; letter-spacing: .16em; font-weight: 600; margin-top: 46px; }
+.tape span { color: var(--brass); }
+.hand, .note, .logtbl .h, .spots, .lvl, .road .hand, .crossed .hand, .received, .stamp, .form input, .form textarea { font-family: var(--display) !important; }
+.note { font-size: 17px; font-weight: 600; letter-spacing: .02em; color: var(--ink-2) !important; margin-top: 14px; }
+.logtbl .h { font-size: 16px; font-weight: 500; color: var(--ink-2); }
+.logtbl .h.pencil, .logtbl .r.h.pencil { font-size: 21px; font-weight: 700; color: var(--pencil); }
+.logtbl .h.pen-green, .logtbl .h.pen-red { font-size: 18px; font-weight: 700; color: var(--ink); }
+.stamp { border: 0; transform: none; color: var(--ink-2); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; top: 22px; }
+.checks li::before { content: ""; width: 9px; height: 9px; background: var(--brass); top: 17px; left: 6px; border-radius: 1px; }
+.paper .checks li::before { background: var(--ink); }
+.nots li::before { background: var(--rule) !important; }
+.spots { font-size: 18px; font-weight: 700; color: var(--ink); }
+.lvl { font-size: 16px; color: var(--dust); letter-spacing: .1em; text-transform: uppercase; font-weight: 600; }
+.road .hand { font-size: 14px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; }
+.crossed .hand { font-size: 17px; font-weight: 600; color: var(--ink-2); margin-top: 4px; }
+.crossed s { text-decoration-color: var(--ink-2); text-decoration-thickness: 2px; }
+.received { font-size: 20px; color: var(--ink) !important; transform: none; }
+.form input, .form textarea { font-size: 21px; font-weight: 600; color: var(--ink); }
+.faq summary::after { font-family: var(--display); font-size: 26px; top: 12px; }
+.cover, .cover.dark { transform: none; }
+.entry + .entry > .body { border-top: 1px solid var(--rule); }
+@media (max-width: 680px) {
+  .scroll .logtbl { min-width: 0; }
+  .scroll .logtbl td, .scroll .logtbl th { padding-right: 8px; }
+  .scroll .logtbl td { font-size: 17px; }
+  .scroll .logtbl th:nth-child(6), .scroll .logtbl td:nth-child(6) { display: none; }
+  .scroll .logtbl td.day { font-size: 13px; }
+  .pkg .stamp { position: static; display: block; margin-bottom: 6px; }
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="seal" viewBox="0 0 120 120">
+    <defs>
+      <path id="arcTop" d="M18,60 a42,42 0 0 1 84,0"/>
+      <path id="arcBot" d="M14,60 a46,46 0 0 0 92,0"/>
+    </defs>
+    <g fill="#F4F1EA" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700">
+      <text font-size="17" letter-spacing="2"><textPath href="#arcTop" startOffset="50%" text-anchor="middle">POWER</textPath></text>
+      <text font-size="17" letter-spacing="2"><textPath href="#arcBot" startOffset="50%" text-anchor="middle">STRENGTH</textPath></text>
+    </g>
+    <g stroke="#F4F1EA" stroke-width="4" stroke-linecap="round" fill="none">
+      <line x1="44" y1="44" x2="76" y2="80"/><line x1="76" y1="44" x2="44" y2="80"/>
+      <line x1="60" y1="34" x2="60" y2="88"/>
+      <path d="M60,34 h7 a8,8 0 0 1 0,16 h-7"/>
+    </g>
+    <g fill="#EAB308" font-family="Georgia, serif" font-size="12">
+      <text x="34" y="66" text-anchor="middle">α</text><text x="86" y="66" text-anchor="middle">Ω</text>
+    </g>
+  </symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Chi-Rho Power and Strength, home">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><use href="#seal"/></svg>
+      <span><b>Chi-Rho</b><small>Power &amp; Strength</small></span>
+    </a>
+    <nav class="main" id="nav" aria-label="Main">
+      <a href="#coaching">Coaching</a>
+      <a href="#classes">Classes</a>
+      <a href="#club">Barbell Club</a>
+      <a href="#book">Book &amp; Journal</a>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#articles">Articles</a>
+      <a href="#story">My Story</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="top-right">
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+      <a class="apply" href="#apply">Apply</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- =================================================== HOME -->
+<div class="page" data-page="home">
+  <section class="entry hero">
+    <div class="tape">Toledo, Ohio<span>and online</span></div>
+    <div class="body">
+      <div>
+        <h1>Are you stronger than you were <em>last month?</em></h1>
+        <p class="lede">If you don't know, you're not writing it down. I coach men in Toledo and online to get stronger every week. Stronger is healthier.</p>
+        <div class="ctas">
+          <a class="btn" href="#apply">Apply for coaching</a>
+          <a class="link" href="#apply">Book a free 20-minute call</a>
+        </div>
+      </div>
+      <article class="paper tilt-r" aria-label="Example training log page">
+        <div class="paper-head"><b>Week 9 · Friday</b><small>Sets × reps</small></div>
+        <table class="logtbl">
+          <tr><td>Squat</td><td class="r">1 × 3</td><td class="r w">315 lb</td><td class="r h pen-red">PR</td></tr>
+          <tr><td>Bench press</td><td class="r">3 × 5</td><td class="r w">205 lb</td><td class="r h pen-green">✓</td></tr>
+          <tr><td>Deadlift</td><td class="r">1 × 5</td><td class="r w">365 lb</td><td class="r h pen-green">✓</td></tr>
+          <tr><td>Chin-ups</td><td class="r">3 × 8</td><td class="r w">BW</td><td class="r h pen-green">✓</td></tr>
+        </table>
+        <p class="note pen-red">PR on squat. Yeaaaa buddy. Now move on.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="entry name">
+    <div class="tape">The name</div>
+    <div class="body">
+      <svg class="seal" viewBox="0 0 120 120" aria-hidden="true"><use href="#seal"/></svg>
+      <div>
+        <h2>Chi-Rho means <em>Christ reigns.</em></h2>
+        <p class="big">Not my feelings. Not the training. Lifting is a tool. It won't make you a man, and plenty of real men don't train. It will make you stronger, and stronger is healthier.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Day one</div>
+    <div class="body">
+      <h2>Before I write you a program, I need answers.</h2>
+      <ul class="asks paper tilt-l">
+        <li>What are you doing now, and why?</li>
+        <li>Can you explain the logic behind it?</li>
+        <li>How old are you?</li>
+        <li>What do you weigh?</li>
+        <li>How long have you been training?</li>
+        <li>What are you eating?</li>
+      </ul>
+      <p class="after">Answer those in your application. That's where we start. <a class="link" href="#apply">Fill it out</a></p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">What you'd do<span>Month one</span></div>
+    <div class="body">
+      <h2>Your first month, on paper</h2>
+      <p class="lede muted">An example for a new lifter. Day A and Day B, alternating, three days a week. Add 5 pounds when you get every rep.</p>
+      <div class="paper scroll">
+        <table class="logtbl">
+          <thead><tr><th>Day</th><th>Lift</th><th class="r">Sets × reps</th><th class="r">Week 1</th><th class="r">Week 4</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td class="day">Mon · A</td><td>Squat</td><td class="r">3 × 5</td><td class="r">135</td><td class="r h pencil">195</td><td class="h">5 lb a session while form holds</td></tr>
+            <tr><td class="day">Mon · A</td><td>Bench press</td><td class="r">3 × 5</td><td class="r">95</td><td class="r h pencil">125</td><td class="h">alternates with the press</td></tr>
+            <tr><td class="day">Mon · A</td><td>Deadlift</td><td class="r">1 × 5</td><td class="r">155</td><td class="r h pencil">245</td><td class="h">one hard set, make it count</td></tr>
+            <tr><td class="day">Wed · B</td><td>Squat</td><td class="r">3 × 5</td><td class="r">140</td><td class="r h pencil">200</td><td class="h">same lift, every session</td></tr>
+            <tr><td class="day">Wed · B</td><td>Overhead press</td><td class="r">3 × 5</td><td class="r">65</td><td class="r h pencil">85</td><td class="h">smaller jumps</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Things people say</div>
+    <div class="body">
+      <ul class="myths">
+        <li><q>Deadlifts don't have much ROI.</q><p>ROI is an investment term. How are you measuring it? The pump? How you feel the next morning? Show me something objective.</p></li>
+        <li><q>I need a new program.</q><p>What are you doing now, and why? Most of the time it isn't the program. It's form, it's fatigue, or you're not training as hard as you think you are.</p></li>
+        <li><q>Lifting makes you a man.</q><p>It doesn't. Only God makes a man. The bar makes you stronger, and that's enough.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Rates</div>
+    <div class="body">
+      <h2>Coaching rates</h2>
+      <p class="lede">I coach men. Any age, any experience. The only question is whether you're stronger than you were last month.</p>
+      <ul class="rates">
+        <li><div class="name"><h3>Online · Strength</h3></div><div class="price">$250<small> / mo</small></div><p class="what"><span class="where">Anywhere</span>Your program, check-ins and messages in the Chi-Rho Lifts app. Form checks up to 3 a week.</p></li>
+        <li><div class="name"><h3>Online · Elite</h3></div><div class="price">$500<small> / mo</small></div><p class="what"><span class="where">5 spots</span>For competitive lifters. Video calls, unlimited form checks, meet prep and attempt selection.</p></li>
+        <li><div class="name"><h3>In-person</h3></div><div class="price">$1,150<small> / mo</small></div><p class="what"><span class="where">Toledo</span>Three coached sessions a week, 47 weeks a year.</p></li>
+        <li><div class="name"><h3>Group classes, men 50+</h3></div><div class="price">$300<small> / mo</small></div><p class="what"><span class="where">Toledo</span>Five lifters max. Same program, coached together.</p></li>
+      </ul>
+      <p style="margin-top:22px"><a class="link" href="#coaching">Everything that's included</a></p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Also here</div>
+    <div class="body">
+      <div class="bookrow">
+        <div class="cover" role="img" aria-label="Shut Up and Lift book cover"><small>Octavio Sanchez</small><b>Shut Up and Lift</b><small>A no-nonsense guide to getting strong</small></div>
+        <div>
+          <p class="pull">You need three things: a barbell, progressive overload, and consistency.</p>
+          <p class="small" style="margin-top:12px">From chapter 1 of <i>Shut Up and Lift</i>.</p>
+          <div class="ctas"><a class="link" href="#book">The book</a><a class="link" href="#club">Help build the barbell gym</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== COACHING -->
+<div class="page" data-page="coaching">
+  <section class="entry">
+    <div class="tape">Coaching</div>
+    <div class="body">
+      <h1>Stop guessing. <em>Get stronger.</em></h1>
+      <p class="lede">Strength coaching for men. Never touched a barbell, coming back after years away, or stuck at the same numbers for months. Doesn't matter. Are you stronger than last month? That's what we work on.</p>
+      <div class="ctas"><a class="btn" href="#apply">Apply</a><a class="link" href="#apply">Free 20-minute call</a></div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">This is you if</div>
+    <div class="body two">
+      <ul class="checks">
+        <li>You're tired of random YouTube workouts.</li>
+        <li>You've got 30, 50 or 100+ pounds to lose and don't know where to start.</li>
+        <li>You used to be strong. Then kids, career and injuries happened.</li>
+        <li>You're under a doctor's care and want training that works with it. Medical calls stay with your doctor.</li>
+        <li>You've been stuck at the same numbers for months.</li>
+        <li>You need someone to hold you to it.</li>
+      </ul>
+      <ul class="facts">
+        <li>Under the bar <b>10+ years</b></li>
+        <li>Best squat <b>480 lb</b></li>
+        <li>Best deadlift <b>480 lb</b></li>
+        <li>Programming refined <b>5 years</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Online</div>
+    <div class="body">
+      <h2>Online coaching</h2>
+      <p class="lede muted">Train anywhere: your gym, your garage, on the road. Your program, meal plan, check-ins and messages all live in the Chi-Rho Lifts app, free with coaching.</p>
+      <div class="pkgs">
+        <article class="paper pkg tilt-l">
+          <span class="stamp">most picked</span>
+          <h3>Strength Coaching</h3>
+          <div class="price">$250<small> / month</small></div>
+          <ul class="checks">
+            <li>Custom program from a detailed assessment</li>
+            <li>Weekly check-ins in the app</li>
+            <li>Form check videos, up to 3 a week</li>
+            <li>Program changes based on your numbers</li>
+            <li>Messages in the app, answered within 24 hours</li>
+            <li>15-minute calls every two weeks</li>
+            <li>Nutrition plan for strength or fat loss</li>
+          </ul>
+          <p class="for"><b>For:</b> lifters who've stalled on generic programs, men with weight to lose who want to keep their muscle, and guys juggling work and family.</p>
+          <a class="link" href="#apply">Apply for Strength</a>
+        </article>
+        <article class="paper pkg tilt-r">
+          <span class="stamp">5 spots</span>
+          <h3>Elite Performance</h3>
+          <div class="price">$500<small> / month</small></div>
+          <ul class="checks">
+            <li>Everything in Strength Coaching</li>
+            <li>30-minute video calls every two weeks</li>
+            <li>Unlimited form checks, 48-hour turnaround</li>
+            <li>Daily messaging, same-day answers</li>
+            <li>Full nutrition coaching</li>
+            <li>Meet prep and attempt selection</li>
+            <li>Quarterly program design sessions</li>
+            <li>The book and the training journal, free</li>
+          </ul>
+          <p class="for"><b>For:</b> competitive powerlifters and anyone chasing a serious total.</p>
+          <a class="link" href="#apply">Apply for Elite</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">In person<span>Toledo</span></div>
+    <div class="body">
+      <h2>In-person coaching</h2>
+      <p class="lede">I'm right there for every rep. Three 60-minute sessions a week, 47 weeks a year. The other 5 weeks are holidays and planned time off, so you aren't paying for weeks you don't train. The goal is that you can train on your own by the end of a year.</p>
+      <ul class="rates">
+        <li><div class="name"><h3>Full-time coaching</h3></div><div class="price">$1,150<small> / month</small></div>
+          <div class="what"><ul class="checks" style="margin-top:6px">
+            <li>Every session coached</li>
+            <li>Programming updated week to week from how you're lifting</li>
+            <li>Priority messages in the app, same-day answers</li>
+            <li>Nutrition plan and quarterly programming sessions</li>
+            <li>The book and the training journal, free</li>
+          </ul></div></li>
+      </ul>
+      <p class="small" style="margin-top:14px">You need access to a barbell, rack and plates. Exact location after the call.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">The deal</div>
+    <div class="body">
+      <h2>Guarantees and discounts</h2>
+      <div class="offers">
+        <div><b>8 weeks</b><p>You'll see measurable strength gains in the first 8 weeks. Numbers in the log, not feelings.</p></div>
+        <div><b>Month 1</b><p>Full refund if you're not satisfied. After that it's month to month with 30 days' notice. No contracts.</p></div>
+        <div><b>15% off</b><p>Bought <i>Shut Up and Lift</i>? Show the receipt and your first month is 15% off.</p></div>
+        <div><b>$50</b><p>Refer a friend who signs up and you get $50. He gets $25 off his first month.</p></div>
+        <div><b>5 · 10 · 15%</b><p>Pay 3, 6 or 12 months up front and save 5, 10 or 15%.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">How it starts</div>
+    <div class="body">
+      <ol class="road">
+        <li class="here"><div><b>Apply</b><p>Training history, goals, what you eat, your schedule.</p></div></li>
+        <li><div><b>20-minute call</b><p>We make sure it's a fit. You ask anything.</p></div></li>
+        <li><div><b>Assessment</b><p>We find your baselines. You get the app and your first program in it.</p></div></li>
+        <li><div><b>Train and log</b><p>Show up, do the work, write it down. I'll handle the adjustments.</p></div></li>
+      </ol>
+      <p style="margin-top:24px"><a class="btn" href="#apply">Apply now</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== APPLY -->
+<div class="page" data-page="apply">
+  <section class="entry">
+    <div class="tape">Apply</div>
+    <div class="body">
+      <h1>Fill out the <em>intake sheet.</em></h1>
+      <p class="lede">I read every one myself. Be honest. "I don't know" is a fine answer. That's what I'm here for.</p>
+      <form class="paper form" id="applyForm" novalidate>
+        <div class="paper-head"><b>Chi-Rho intake</b><small>Page 1 of 1</small></div>
+        <div class="grid" style="margin-top:18px">
+          <div><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name"></div>
+          <div><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+          <div><label for="f-age">How old are you?</label><input id="f-age" name="age" inputmode="numeric"></div>
+          <div><label for="f-weight">What do you weigh?</label><input id="f-weight" name="weight" inputmode="numeric"></div>
+          <div class="full"><label for="f-now">What are you doing now, and why?<small>Program, days a week, where you train</small></label><textarea id="f-now" name="now"></textarea></div>
+          <div class="full"><label for="f-logic">Can you explain the logic behind it?</label><textarea id="f-logic" name="logic"></textarea></div>
+          <div><label for="f-years">How long have you been training?</label><input id="f-years" name="years"></div>
+          <div><label for="f-eat">What are you eating?</label><input id="f-eat" name="eat"></div>
+          <div class="full"><label>Best lifts right now<small>Weight × reps. Leave blank if you don't know</small></label>
+            <div class="lifts">
+              <div><label for="f-sq"><small>Squat</small></label><input id="f-sq" name="squat"></div>
+              <div><label for="f-bp"><small>Bench</small></label><input id="f-bp" name="bench"></div>
+              <div><label for="f-dl"><small>Deadlift</small></label><input id="f-dl" name="deadlift"></div>
+            </div>
+          </div>
+          <div class="full"><label for="f-hurt">Injuries, conditions or medications?<small>Your doctor makes the medical calls. I build around them</small></label><input id="f-hurt" name="hurt"></div>
+          <div class="full"><label for="f-sched">Your schedule<small>Shift work is fine. I train around overnights myself</small></label><input id="f-sched" name="schedule"></div>
+          <fieldset class="full"><legend class="legend">Which coaching?</legend>
+            <div class="opts">
+              <label><input type="radio" name="plan" id="p1" value="strength"> Online Strength</label>
+              <label><input type="radio" name="plan" id="p2" value="elite"> Online Elite</label>
+              <label><input type="radio" name="plan" id="p3" value="inperson"> In-person</label>
+              <label><input type="radio" name="plan" id="p4" value="class"> Group class, 50+</label>
+              <label><input type="radio" name="plan" id="p5" value="unsure"> Not sure yet</label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="actions">
+          <button class="btn" type="submit">Send it</button>
+          <span class="small">Or book the free 20-minute call first.</span>
+        </div>
+        <p class="received" role="status">Got it. I'll read it and get back to you. (Mockup: nothing was sent.)</p>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== CLASSES -->
+<div class="page" data-page="classes">
+  <section class="entry">
+    <div class="tape">Group classes<span>Men 50+</span></div>
+    <div class="body two">
+      <div>
+        <h1>Over 50? <em>Get under the bar.</em></h1>
+        <p class="lede">Coached barbell training in groups of five or fewer, built for men over 50. Joint-friendly loading, controlled jumps, and real strength you can see in the log.</p>
+        <div class="ctas"><a class="btn" href="#apply">Reserve a spot</a><a class="link" href="#apply">Free 20-minute call</a></div>
+      </div>
+      <ul class="facts">
+        <li>Month to month <b>$300 / mo</b></li>
+        <li>Paid up front <b>$3,600 / yr</b></li>
+        <li>Per class <b>3 to 5 men</b></li>
+        <li>Training weeks <b>47 a year</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Schedule</div>
+    <div class="body">
+      <h2>Four classes. Pick one.</h2>
+      <p class="lede muted">A class launches once 3 men sign up. If it never fills, you get a full refund or move to another class.</p>
+      <div class="paper scroll tilt-r">
+        <div class="paper-head"><b>Class sign-up sheet</b><small>Max 5 per class</small></div>
+        <table class="logtbl">
+          <thead><tr><th>Class</th><th>Days</th><th>Who</th><th class="r">Open spots</th></tr></thead>
+          <tbody>
+            <tr><td>Morning</td><td>Mon · Wed · Fri</td><td>Men 50+</td><td class="r spots">5 left</td></tr>
+            <tr><td>Evening</td><td>Mon · Wed · Fri</td><td>Men 50+</td><td class="r spots">5 left</td></tr>
+            <tr><td>Morning</td><td>Tue · Thu · Sat</td><td>Men 50+</td><td class="r spots">5 left</td></tr>
+            <tr><td>Evening</td><td>Tue · Thu · Sat</td><td>Men 50+</td><td class="r spots">5 left</td></tr>
+          </tbody>
+        </table>
+        <p class="note pen-red">3 names and it starts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Every class</div>
+    <div class="body two">
+      <ul class="checks">
+        <li>Coached sessions with hands-on technique work</li>
+        <li>Group program updated every month</li>
+        <li>Progress logged every session</li>
+        <li>Warm-ups and cool-downs built for 50+ recovery</li>
+        <li>Messages between sessions</li>
+        <li>The Chi-Rho Lifts app, included</li>
+      </ul>
+      <div>
+        <h3>Founding member path</h3>
+        <p class="muted" style="margin-top:10px">Pay the year up front ($3,600) and you're a founding member of Chi-Rho Barbell Club. Finish your 47 weeks and you get lifetime gym access. No monthly fee, ever.</p>
+        <a class="link" href="#club">About the gym</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Questions</div>
+    <div class="body faq">
+      <details><summary>Do I need experience?</summary><p>No. We teach the lifts from scratch and progress at a pace that makes sense for you.</p></details>
+      <details><summary>What if I miss classes?</summary><p>It happens. Your rate covers the membership, not single sessions. Showing up is what gets you stronger, but a missed week won't wreck you.</p></details>
+      <details><summary>Can I switch classes?</summary><p>Yes, if there's room in the other class. Just tell me.</p></details>
+      <details><summary>Is lifetime access really free after a year?</summary><p>Yes. Pay the year up front and finish 47 weeks of training. That's the founding member deal.</p></details>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== CLUB -->
+<div class="page" data-page="club">
+  <section class="entry">
+    <div class="tape">Barbell Club<span>Founding members</span></div>
+    <div class="body">
+      <h1>Toledo needs a <em>barbell gym.</em></h1>
+      <p class="lede">Racks, bars, plates and platforms. No machines, no cardio decks. We're raising $65,000 through founding memberships to build Chi-Rho Barbell Club. Founding members get in first and keep the lowest rate this gym will ever have.</p>
+      <div class="raise">
+        <div class="nums">
+          <div><b>$0</b><span>Raised</span></div>
+          <div><b>0</b><span>Founding members</span></div>
+          <div><b>$65,000</b><span>Goal</span></div>
+        </div>
+        <div class="barbell" aria-hidden="true"><div class="shaft"></div><div class="fill" style="width:0%"></div><div class="collar l"></div><div class="collar r"></div></div>
+        <div class="ticks"><span>$0</span><span>$15k</span><span>$30k</span><span>$45k</span><span>$65k</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Memberships</div>
+    <div class="body">
+      <h2>Pick your founding membership</h2>
+      <p class="lede muted">Founding rates: $25 a month or $300 a year, locked for life. After the campaign it's $35 a month. Every membership includes the Chi-Rho Lifts app.</p>
+      <ul class="rates">
+        <li><div class="name"><h3>Community supporter</h3></div><div class="price">$25<small> once</small></div><p class="what">Your name on the Founders Wall, a Discord role, opening news first and a sticker pack.</p></li>
+        <li><div class="name"><h3>Supporter plus</h3></div><div class="price">$50<small> once</small></div><p class="what">All of the above, a founding t-shirt, build-out updates and 10% off your first month of coaching.</p></li>
+        <li><div class="name"><h3>Founding annual</h3></div><div class="price">$300<small> / yr</small></div><p class="what"><span class="where">Most picked</span>A year of gym access, rate locked for life on renewal, first through the doors, and a 30-minute programming review every quarter.</p></li>
+        <li><div class="name"><h3>Founding monthly</h3></div><div class="price">$25<small> / mo</small></div><p class="what">Full access, cancel anytime, $25 locked for life.</p></li>
+        <li><div class="name"><h3>Founding coaching client</h3></div><div class="price">$250<small> / mo</small></div><p class="what"><span class="where">Best value</span>Online coaching now. When the gym opens, $25 of it covers your membership, and you get first pick of in-person slots.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">The order</div>
+    <div class="body">
+      <h2>What your money buys</h2>
+      <div class="paper scroll order tilt-l" style="margin-top:26px">
+        <div class="paper-head"><b>Equipment order</b><small>$50,000 equipment · $15,000 build-out</small></div>
+        <table class="logtbl">
+          <thead><tr><th>Qty</th><th>Item</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td>4</td><td>Rogue HR-2 half racks</td><td class="h">with bench, bar and plates</td></tr>
+            <tr><td>4</td><td>Rogue RM-3 Monster racks</td><td class="h">main lift stations</td></tr>
+            <tr><td>16</td><td>Rogue Ohio Power Bars</td><td class="h">stiff, good knurl</td></tr>
+            <tr><td>4</td><td>Rogue Westside benches</td><td class="h">comp height</td></tr>
+            <tr><td>—</td><td>Olympic plate sets, 1.25 to 45 lb</td><td class="h">lots of them</td></tr>
+            <tr><td>—</td><td>Rubber floor + deadlift platforms</td><td class="h">2,500–3,000 sq ft</td></tr>
+            <tr><td>—</td><td>Plate trees, bar holders, chalk, timer</td><td class="h">no TVs</td></tr>
+          </tbody>
+        </table>
+        <p class="note pen-red">Every dollar tracked. Founders get the updates first.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">The plan</div>
+    <div class="body">
+      <ol class="road">
+        <li class="here"><div><b>Campaign live</b><span class="hand">we're here</span><p>Founding memberships open. Build the community before we build the gym.</p></div></li>
+        <li><div><b>Funded</b><p>Hit $65,000. Place the Rogue order.</p></div></li>
+        <li><div><b>Build-out</b><p>Floors, platforms, racks. You'll see all of it.</p></div></li>
+        <li><div><b>Founders first</b><p>Doors open to founding members before anyone else.</p></div></li>
+        <li><div><b>Grand opening</b><p>Chi-Rho Barbell Club opens to Toledo.</p></div></li>
+      </ol>
+      <p style="margin-top:24px"><a class="btn" href="#club">Become a founding member</a></p>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== BOOK -->
+<div class="page" data-page="book">
+  <section class="entry">
+    <div class="tape">The book</div>
+    <div class="body bookrow">
+      <div class="cover" role="img" aria-label="Shut Up and Lift book cover"><small>Octavio Sanchez</small><b>Shut Up and Lift</b><small>A no-nonsense guide to getting strong</small></div>
+      <div>
+        <h1>Shut up <em>and lift.</em></h1>
+        <p class="lede">The book I wish I had when I started. Three exercises. Three days a week. Add weight. That's the system.</p>
+        <div class="ctas"><a class="btn" href="#book">Buy on Amazon</a><a class="link" href="#book">Read chapter 1 free</a></div>
+        <p class="small" style="margin-top:16px">$15–20. Buy it, then get 15% off your first month of coaching.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Chapter 1</div>
+    <div class="body">
+      <p class="pull">You don't need 17 different exercises. You need three things: a barbell, progressive overload, and consistency.</p>
+      <div class="two" style="margin-top:34px">
+        <ul class="checks">
+          <li>The three lifts that build serious strength</li>
+          <li>How to add weight to the bar every session</li>
+          <li>Form for the squat, bench press and deadlift</li>
+          <li>A simple 3-day schedule</li>
+          <li>When to add weight, when to deload, how to track it</li>
+          <li>The mistakes beginners make, and how to skip them</li>
+        </ul>
+        <div>
+          <h3>Who it's for</h3>
+          <p class="muted" style="margin-top:10px">Never touched a barbell. Been training and not getting stronger. Switching programs every month. Drowning in information.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Book or coach</div>
+    <div class="body pkgs" style="margin-top:0">
+      <article class="paper pkg tilt-l">
+        <h3>Get the book if</h3>
+        <ul class="checks" style="margin-top:12px">
+          <li>You can run it on your own</li>
+          <li>You want to learn the method yourself</li>
+          <li>Money's tight</li>
+          <li>You want to try it before you hire anybody</li>
+        </ul>
+      </article>
+      <article class="paper pkg tilt-r">
+        <h3>Get a coach if</h3>
+        <ul class="checks" style="margin-top:12px">
+          <li>You want a program built for your situation</li>
+          <li>You need someone to check your form</li>
+          <li>You want check-ins and someone to answer to</li>
+        </ul>
+        <p class="note pen-red">Buy the book first. 15% off coaching.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="entry" id="journal">
+    <div class="tape">The journal</div>
+    <div class="body bookrow">
+      <div class="cover dark" role="img" aria-label="Strength Training Journal cover"><small>Chi-Rho</small><b>Strength Training Journal</b><small>450+ pages</small></div>
+      <div>
+        <h2>Write it down.</h2>
+        <p class="lede">Apps crash. Phones get lost. A notebook stays on the shelf. More than a year of daily logs, weekly check-ins, monthly reviews, PR pages and habit tracking, with no phone in your hand between sets.</p>
+        <div class="ctas"><a class="btn" href="#book">Buy on Amazon</a></div>
+        <p class="small" style="margin-top:14px">Elite and in-person clients get one free.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== PHILOSOPHY -->
+<div class="page" data-page="philosophy">
+  <section class="entry">
+    <div class="tape">Philosophy</div>
+    <div class="body">
+      <h1>Add weight to the bar. <em>That's the principle.</em></h1>
+      <p class="lede">Getting stronger means lifting more weight over time. Not muscle confusion. Not the burn. Not a new program every six weeks. Did the weight on the bar go up? Yes or no.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">The template</div>
+    <div class="body">
+      <h2>Three days a week. A, B, A, B.</h2>
+      <div class="pkgs">
+        <article class="paper tilt-l">
+          <div class="paper-head"><b>Day A</b><small>Sets × reps</small></div>
+          <table class="logtbl"><tr><td>Squat</td><td class="r">3 × 5</td></tr><tr><td>Bench press</td><td class="r">3 × 5</td></tr><tr><td>Deadlift</td><td class="r">1 × 5</td></tr></table>
+        </article>
+        <article class="paper tilt-r">
+          <div class="paper-head"><b>Day B</b><small>Sets × reps</small></div>
+          <table class="logtbl"><tr><td>Squat</td><td class="r">3 × 5</td></tr><tr><td>Overhead press</td><td class="r">3 × 5</td></tr><tr><td>Deadlift</td><td class="r">1 × 5</td></tr></table>
+        </article>
+      </div>
+      <p class="note pencil" style="margin-top:22px">Got every rep with good form? Add 5 lb next time. Missed a workout? Pick up where you left off.</p>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">What it's not</div>
+    <div class="body">
+      <ul class="myths">
+        <li><q>Bodybuilding</q><p>We train for strength. Strength builds muscle, but muscle isn't the target.</p></li>
+        <li><q>Powerlifting (yet)</q><p>This is beginner programming. Meet prep comes later, when you've earned it.</p></li>
+        <li><q>Functional fitness</q><p>No box jumps, no battle ropes. Getting strong is functional.</p></li>
+        <li><q>"Optimal"</q><p>There's no perfect program. The best one is the one you'll still be running in two years.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Objections</div>
+    <div class="body faq">
+      <details open><summary>Only three exercises? That's not enough.</summary><p>For a beginner it's plenty. Those three work your whole body. More exercises just split your focus and your recovery.</p></details>
+      <details><summary>What about arms, abs and calves?</summary><p>Squats and deadlifts hit your core harder than any ab exercise. Pressing grows your arms. Want accessories? Do them after the main work.</p></details>
+      <details><summary>Three days isn't enough volume.</summary><p>If you're adding weight every session, it's enough. Train hard three days, recover four.</p></details>
+      <details><summary>This seems too simple to work.</summary><p>Run it for three months and look at your log. Then tell me.</p></details>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">After that</div>
+    <div class="body">
+      <h2>When you stop adding weight every session</h2>
+      <p class="lede">That's normal. You're not a beginner anymore. Now it's weekly progress, planned heavy and light phases, and deloads. That's where coaching earns its money.</p>
+      <a class="link" href="#coaching">Coaching</a>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== STORY -->
+<div class="page" data-page="story">
+  <section class="entry">
+    <div class="tape">My story</div>
+    <div class="body two">
+      <div>
+        <h1>I'm not special. <em>I just kept writing it down.</em></h1>
+        <div class="letter" style="margin-top:26px">
+          <p>I'm Octavio. I wasn't a college athlete and I don't have good genetics. I've trained for over ten years, most of them around overnight shifts in a warehouse. I have an IT degree from WGU and I wrote a book.</p>
+          <p>About five years ago I stopped trying to be clever. Squat, press, deadlift. Three days a week. More weight every time I could. It worked better than anything I'd paid for.</p>
+          <p>Now I coach men who want the same thing: to be stronger next month than they are today.</p>
+          <p class="sign">Octavio Sanchez<small>Coach · Author of Shut Up and Lift</small></p>
+        </div>
+      </div>
+      <div>
+        <ul class="facts">
+          <li>Training <b>10+ years</b></li>
+          <li>Best squat <b>480 lb</b></li>
+          <li>Best deadlift <b>480 lb</b></li>
+          <li>Degree <b>BS, IT Mgmt · WGU 2025</b></li>
+          <li>Shift <b>Overnight</b></li>
+        </ul>
+        <figure style="margin:0"><div class="photo" role="img" aria-label="Black and white photo of a loaded barbell"></div><figcaption>Your stock photo here, in black and white with grain.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Mistakes I made</div>
+    <div class="body">
+      <h2>Every mistake you're about to make</h2>
+      <ul class="crossed paper tilt-l" style="margin-top:26px">
+        <li><s>Switching programs every 6 to 8 weeks</s><span class="hand">wasted a whole year</span></li>
+        <li><s>Worrying about tempo, rest times and "optimal" reps</s><span class="hand">just lift</span></li>
+        <li><s>Chasing the pump with tons of accessory work</s><span class="hand">add weight to the main lifts</span></li>
+        <li><s>Same weights for months</s><span class="hand">then wondering why I wasn't stronger</span></li>
+        <li><s>Supplements, special programs, the perfect split</s><span class="hand">didn't matter</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">How I coach</div>
+    <div class="body dodont">
+      <div><h3>What I won't do</h3><ul class="checks nots" style="margin-top:12px">
+        <li>Sell you supplements</li><li>Promise you a 90-day transformation</li><li>Overcomplicate your program</li><li>Let you program-hop</li><li>Make you feel small for being new</li>
+      </ul></div>
+      <div><h3>What I will do</h3><ul class="checks" style="margin-top:12px">
+        <li>Tell you the truth, straight</li><li>Teach you to add weight to the bar</li><li>Keep it to the lifts that work</li><li>Check your form and your log</li><li>Hold you to it</li>
+      </ul></div>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== ARTICLES -->
+<div class="page" data-page="articles">
+  <section class="entry">
+    <div class="tape">Articles</div>
+    <div class="body">
+      <h1>From the <em>training log.</em></h1>
+      <p class="lede">Straight answers about getting stronger.</p>
+      <ul class="articles">
+        <li><time datetime="2026-01-06">Jan 6, 2026</time><div><a href="#post">Progressive overload: the only principle that matters</a><p>Everything else is details.</p></div><span class="len">8 min</span></li>
+        <li><time datetime="2026-01-05">Jan 5, 2026</time><div><a href="#post">Stop program hopping</a><p>Why switching programs every six weeks is killing your progress.</p></div><span class="len">6 min</span></li>
+        <li><time datetime="2026-01-04">Jan 4, 2026</time><div><a href="#post">5 mistakes every beginner makes</a><p>I made all of them so you don't have to.</p></div><span class="len">7 min</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="entry">
+    <div class="tape">Programs<span>$5 each</span></div>
+    <div class="body">
+      <h2>Programs you can run yourself</h2>
+      <ul class="rates">
+        <li><div class="name"><h3>Foundational Strength, 2-day <span class="lvl">beginner</span></h3></div><div class="price">$5</div><p class="what">12 weeks. Learn the lifts, build the habit.</p></li>
+        <li><div class="name"><h3>Foundational Strength, 3-day <span class="lvl">beginner</span></h3></div><div class="price">$5</div><p class="what">12 weeks, full body. Linear progression.</p></li>
+        <li><div class="name"><h3>Hypertrophy &amp; Strength, 3-day <span class="lvl">6+ months in</span></h3></div><div class="price">$5</div><p class="what">8 weeks. Build muscle and keep adding weight.</p></li>
+        <li><div class="name"><h3>Powerlifting, 3-day <span class="lvl">advanced</span></h3></div><div class="price">$5</div><p class="what">12 weeks. Peak for a meet.</p></li>
+        <li><div class="name"><h3>Powerlifting, 4-day <span class="lvl">advanced</span></h3></div><div class="price">$5</div><p class="what">12 weeks, high volume. For lifters who recover well.</p></li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== ARTICLE PAGE -->
+<div class="page" data-page="post">
+  <section class="entry">
+    <div class="tape">Article<span>8 min</span></div>
+    <div class="body">
+      <p class="byline"><a href="#articles" style="text-decoration:none">← Articles</a> · Jan 6, 2026 · Octavio Sanchez</p>
+      <h1 style="margin-top:12px">Progressive overload: <em>the only principle that matters.</em></h1>
+      <div class="post" style="margin-top:30px">
+        <p>Take one thing from this: progressive overload is what makes you stronger. Not muscle confusion. Not the burn. Not training to failure. Not "optimal" rep ranges.</p>
+        <h2>What it is</h2>
+        <p>Lift more weight over time. That's it. Squat 135 for 3 sets of 5 today, squat 225 for 3 sets of 5 in six months, and you got stronger. Your body adapted because the load went up.</p>
+        <h2>How to do it</h2>
+        <p>If you're new, add weight every session:</p>
+        <div class="paper tilt-r">
+          <div class="paper-head"><b>Squat · 3 × 5</b><small>Linear progression</small></div>
+          <table class="logtbl">
+            <tr><td class="day">Session 1</td><td class="r w">135 lb</td><td class="r h pen-green">✓</td></tr>
+            <tr><td class="day">Session 2</td><td class="r w">140 lb</td><td class="r h pen-green">✓</td></tr>
+            <tr><td class="day">Session 3</td><td class="r w">145 lb</td><td class="r h pen-green">✓</td></tr>
+          </table>
+          <p class="note pen-red">Keep going until you miss reps. Then try it again.</p>
+        </div>
+        <h2>When that stops working</h2>
+        <p>Eventually you can't add weight every session. That's normal. You're an intermediate now. Add weight weekly, add reps before weight, and plan your heavy and light weeks. The rule doesn't change: the load has to go up.</p>
+        <h2>Mistakes</h2>
+        <p><b>Chasing the pump.</b> It feels good. It doesn't make you stronger. <b>Changing exercises all the time.</b> You can't add weight to a lift you only did once. <b>Obsessing over accessories.</b> Squat, bench, deadlift. Add weight. The rest is extra.</p>
+        <p>Simple. Not easy. Go add five pounds.</p>
+        <div class="ctas" style="margin-top:28px"><a class="link" href="#book">Read the book</a><a class="link" href="#coaching">Get coached</a></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- =================================================== FAQ -->
+<div class="page" data-page="faq">
+  <section class="entry">
+    <div class="tape">FAQ</div>
+    <div class="body">
+      <h1>Ask me <em>straight.</em></h1>
+      <p class="lede">Don't see your question? Ask. I'd rather answer it than have you guess.</p>
+      <div class="faq">
+        <h3 class="group">Getting started</h3>
+        <details><summary>I'm a complete beginner. Is this for me?</summary><p>Yes. We start with the basics and build from there. Show up and do the work.</p></details>
+        <details><summary>How fast will I see results?</summary><p>Most clients hit their first PRs within 4 to 6 weeks. You'll see measurable gains in 8, guaranteed.</p></details>
+        <details><summary>Do I need to read the book first?</summary><p>No. It helps, and it gets you 15% off your first month.</p></details>
+        <h3 class="group">Training</h3>
+        <details><summary>What equipment do I need?</summary><p>A barbell, a rack and plates. That's it.</p></details>
+        <details><summary>How many days a week?</summary><p>Three. Every week.</p></details>
+        <details><summary>What if I miss workouts?</summary><p>Pick up where you left off. Don't restart. Don't switch programs.</p></details>
+        <details><summary>I work nights. Will this work?</summary><p>I train around overnight shifts myself. We'll build it around yours.</p></details>
+        <details><summary>I'm over 50. Is this okay at my age?</summary><p>Yes. Look at the group classes. They're built for men 50 and up.</p></details>
+        <details><summary>I have an old injury.</summary><p>Tell me in the application. Your doctor makes the medical calls. I build the training around them.</p></details>
+        <h3 class="group">Money</h3>
+        <details><summary>Can I cancel anytime?</summary><p>Yes. Month to month, 30 days' notice. Full refund in month one if you're not satisfied.</p></details>
+        <details><summary>How fast do you answer messages?</summary><p>Within 24 hours on Strength. Same day on Elite and in-person.</p></details>
+        <details><summary>Can't I just run a free program?</summary><p>You can. Are you stronger than you were last month? If yes, keep going. If not, apply.</p></details>
+        <h3 class="group">Who I coach</h3>
+        <details><summary>Do you coach women?</summary><p>I coach men. If you're a woman with a training question, ask. I'll point you in the right direction.</p></details>
+        <details><summary>What app do you use?</summary><p>Chi-Rho Lifts. I built it. Your program, check-ins and messages all live there, and it's free with coaching.</p></details>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><svg viewBox="0 0 120 120" width="64" height="64" aria-hidden="true"><use href="#seal"/></svg></div>
+    <div><b>Coaching</b><p><a href="#coaching">Online &amp; in-person</a><br><a href="#classes">Group classes 50+</a><br><a href="#apply">Apply</a></p></div>
+    <div><b>Learn</b><p><a href="#book">Book &amp; journal</a><br><a href="#philosophy">Philosophy</a><br><a href="#articles">Articles &amp; programs</a></p></div>
+    <div><b>About</b><p><a href="#story">My story</a><br><a href="#club">Barbell Club</a><br><a href="#faq">FAQ</a></p></div>
+    <div><b>Reach me</b><p>Toledo, Ohio<br><span class="sel">(419) 343-9894</span><br><span class="sel">chirhostrength@gmail.com</span></p></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav.main a'));
+  var nav = document.getElementById('nav');
+  var btn = document.getElementById('menuBtn');
+  function show() {
+    var id = (location.hash || '#home').slice(1);
+    var hit = pages.some(function (p) { return p.dataset.page === id; }) ? id : 'home';
+    pages.forEach(function (p) { p.classList.toggle('on', p.dataset.page === hit); });
+    links.forEach(function (a) {
+      var t = a.getAttribute('href').slice(1);
+      var on = t === hit || (hit === 'post' && t === 'articles') || (hit === 'apply' && t === 'coaching');
+      if (on) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    nav.classList.remove('open'); btn.setAttribute('aria-expanded', 'false');
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', show);
+  btn.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.getElementById('applyForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    this.classList.add('sent');
+  });
+  show();
+})();
+</script>

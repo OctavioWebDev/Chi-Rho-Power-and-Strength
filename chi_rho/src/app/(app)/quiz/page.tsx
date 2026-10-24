@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Entry, PageTitle } from '@/components/log';
 
 type Question = {
   id: number;
@@ -142,71 +143,40 @@ export default function QuizPage() {
 
   if (showResults) {
     return (
-      <div className="min-h-screen bg-black text-white pt-32 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-yellow-400 mb-6">Your Results</h1>
-          <div className="bg-gray-900 p-8 rounded-lg mb-8">
-            <div className="text-6xl font-bold text-yellow-400 mb-4">{score}/{total}</div>
-            <p className="text-xl mb-6">
-              Based on your answers, we recommend:
-            </p>
-            <h2 className="text-2xl font-bold text-yellow-400 mb-6">
-              {programName}
-            </h2>
-            <p className="mb-8 text-gray-300">
-              This program is tailored to your fitness level and goals. Get started today!
-            </p>
-            <button
-              onClick={() => router.push(`/templates/${recommendedProgram}`)}
-              className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-full transition-colors duration-300 mr-4"
-            >
-              View Recommended Program
+      <main className="lg-wrap">
+        <Entry label="Program quiz" sub="Your result">
+          <PageTitle lede="Based on your answers, start here. Run it start to finish and log every session.">
+            {programName}
+          </PageTitle>
+          <p className="lg-small">Score {score} of {total}</p>
+          <div className="lg-ctas" style={{ marginTop: 18 }}>
+            <button type="button" className="lg-btn" onClick={() => router.push(`/templates/${recommendedProgram}`)}>
+              See the program
             </button>
-            <button
-              onClick={handleRestart}
-              className="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-full transition-colors duration-300"
-            >
-              Retake Quiz
+            <button type="button" className="lg-link" onClick={handleRestart}>
+              Take it again
             </button>
           </div>
-        </div>
-      </div>
+        </Entry>
+      </main>
     );
   }
 
+  const q = questions[currentQuestion];
   return (
-    <div className="min-h-screen bg-black text-white pt-32 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-8">
-          <div className="flex justify-between mb-2">
-            <span className="text-yellow-400">Question {currentQuestion + 1} of {questions.length}</span>
-            <span className="text-gray-400">
-              {Math.round(((currentQuestion) / questions.length) * 100)}% Complete
-            </span>
-          </div>
-          <div className="w-full bg-gray-700 rounded-full h-2.5">
-            <div 
-              className="bg-yellow-500 h-2.5 rounded-full" 
-              style={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
-            ></div>
-          </div>
-        </div>
-
-        <div className="bg-gray-900 p-8 rounded-lg">
-          <h2 className="text-2xl font-bold mb-8">{questions[currentQuestion].question}</h2>
-          <div className="space-y-4">
-            {questions[currentQuestion].options.map((option, index) => (
-              <button
-                key={index}
-                onClick={() => handleAnswer(index)}
-                className="w-full text-left p-4 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors duration-200 border border-gray-700"
-              >
+    <main className="lg-wrap">
+      <Entry label="Program quiz" sub={`Question ${currentQuestion + 1} of ${questions.length}`}>
+        <h1 className="lg-h2">{q.question}</h1>
+        <ul className="lg-quiz">
+          {q.options.map((option, index) => (
+            <li key={index}>
+              <button type="button" onClick={() => handleAnswer(index)}>
                 {option}
               </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+            </li>
+          ))}
+        </ul>
+      </Entry>
+    </main>
   );
 }

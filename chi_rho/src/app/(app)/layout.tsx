@@ -1,4 +1,3 @@
-import BackButton from '../components/BackButton';
 
 export default function AppLayout({
   children,
@@ -7,7 +6,6 @@ export default function AppLayout({
 }) {
   return (
     <>
-      <BackButton />
       {children}
     </>
   );
