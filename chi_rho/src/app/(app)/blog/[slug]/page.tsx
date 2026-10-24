@@ -1,7 +1,7 @@
 import React from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
-import { FaCalendarAlt, FaClock, FaArrowLeft } from 'react-icons/fa'
+import type { Metadata } from 'next'
+import { Entry } from '@/components/log'
 import { notFound } from 'next/navigation'
 
 // This would eventually come from a database or CMS
@@ -49,11 +49,7 @@ const blogPosts: Record<string, {
 
       <p>Here's what that looks like in practice:</p>
 
-      <ul>
-        <li><strong>Session 1:</strong> Squat 135 lbs x 3 sets x 5 reps</li>
-        <li><strong>Session 2:</strong> Squat 140 lbs x 3 sets x 5 reps</li>
-        <li><strong>Session 3:</strong> Squat 145 lbs x 3 sets x 5 reps</li>
-      </ul>
+      <div class="lg-sheet"><div class="lg-sheet-head"><b>Squat · 3 × 5</b><small>Linear progression</small></div><table class="lg-table"><tbody><tr><td class="t-day">Session 1</td><td class="r t-weight">135 lb</td><td class="r">✓</td></tr><tr><td class="t-day">Session 2</td><td class="r t-weight">140 lb</td><td class="r">✓</td></tr><tr><td class="t-day">Session 3</td><td class="r t-weight">145 lb</td><td class="r">✓</td></tr></tbody></table><p class="lg-note">Keep going until you miss reps. Then try it again.</p></div>
 
       <p>Every session, you add 5 lbs. You keep doing this until you can't complete all your reps. Then you try again. Eventually you succeed and keep progressing.</p>
 
@@ -502,6 +498,11 @@ const blogPosts: Record<string, {
 
 }
 
+export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+    const post = blogPosts[params.slug]
+    return post ? { title: post.title, description: post.excerpt } : {}
+}
+
 export default function BlogPostPage({ params }: { params: { slug: string } }) {
     const post = blogPosts[params.slug]
 
@@ -510,114 +511,19 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     }
 
     return (
-        <div className="min-h-screen bg-black py-12 px-4 sm:px-6 lg:px-8">
-            <article className="max-w-4xl mx-auto">
-                {/* Back Button */}
-                <Link
-                    href="/blog"
-                    className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 mb-8 transition-colors"
-                >
-                    <FaArrowLeft />
-                    Back to Articles
-                </Link>
-
-                {/* Hero Image */}
-                <div className="relative h-[400px] rounded-xl overflow-hidden mb-8">
-                    <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-cover"
-                        priority
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+        <main className="lg-wrap">
+            <Entry label="Article" sub={post.readTime.replace(' read', '')}>
+                <p className="lg-byline">
+                    <Link href="/blog">← Articles</Link> · {post.date} · {post.author}
+                </p>
+                <h1 className="lg-h1 lg-post-title">{post.title}</h1>
+                <p className="lg-lede lg-muted">{post.excerpt}</p>
+                <div className="lg-post" dangerouslySetInnerHTML={{ __html: post.content }} />
+                <div className="lg-ctas" style={{ marginTop: 28 }}>
+                    <Link className="lg-link" href="/book">Read the book</Link>
+                    <Link className="lg-link" href="/coaching">Get coached</Link>
                 </div>
-
-                {/* Article Header */}
-                <header className="mb-8">
-                    <div className="flex items-center gap-4 mb-4">
-                        <span className="inline-block bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold">
-                            {post.category}
-                        </span>
-                        <div className="flex items-center gap-4 text-gray-500 text-sm">
-                            <div className="flex items-center gap-2">
-                                <FaCalendarAlt className="w-4 h-4" />
-                                <span>{post.date}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <FaClock className="w-4 h-4" />
-                                <span>{post.readTime}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                        {post.title}
-                    </h1>
-
-                    <p className="text-xl text-gray-400 mb-4">
-                        {post.excerpt}
-                    </p>
-
-                    <div className="text-gray-500 text-sm">
-                        By <span className="text-yellow-400 font-semibold">{post.author}</span>
-                    </div>
-                </header>
-
-                {/* Article Content */}
-                <div
-                    className="prose prose-invert prose-lg max-w-none
-            prose-headings:text-yellow-400 
-            prose-headings:font-bold
-            prose-h2:text-3xl
-            prose-h2:mt-12
-            prose-h2:mb-4
-            prose-p:text-gray-300 
-            prose-p:leading-relaxed
-            prose-p:mb-6
-            prose-strong:text-white
-            prose-ul:text-gray-300
-            prose-li:mb-2
-            prose-a:text-yellow-400
-            prose-a:hover:text-yellow-300"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
-                />
-
-                {/* Author CTA */}
-                <div className="mt-16 p-8 bg-gradient-to-r from-yellow-500/10 to-yellow-500/5 rounded-xl border border-yellow-500/20">
-                    <h3 className="text-2xl font-bold text-yellow-400 mb-4">
-                        Want More Training Advice?
-                    </h3>
-                    <p className="text-gray-300 mb-6">
-                        If you found this helpful, check out my book "Shut Up and Lift" or grab some of my other training resources.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <Link
-                            href="/book"
-                            className="inline-block bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-lg transition-colors text-center"
-                        >
-                            Read the Book
-                        </Link>
-                        <Link
-                            href="/templates"
-                            className="inline-block bg-transparent border-2 border-yellow-500 hover:bg-yellow-500 hover:text-black text-yellow-500 font-bold py-3 px-6 rounded-lg transition-colors text-center"
-                        >
-                            Training Resources
-                        </Link>
-                    </div>
-                </div>
-
-                {/* Back to Blog */}
-                <div className="mt-12 text-center">
-                    <Link
-                        href="/blog"
-                        className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition-colors"
-                    >
-                        <FaArrowLeft />
-                        Back to All Articles
-                    </Link>
-                </div>
-            </article>
-        </div>
+            </Entry>
+        </main>
     )
 }

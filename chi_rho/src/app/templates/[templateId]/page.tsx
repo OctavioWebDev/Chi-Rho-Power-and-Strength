@@ -13,19 +13,11 @@ export async function generateMetadata({ params }: { params: { templateId: strin
   };
 
   return {
-    title: `${template.title} | Chi-Rho Power & Strength`,
+    title: template.title,
     description: template.description,
     openGraph: {
       title: template.title,
       description: template.description,
-      images: [
-        {
-          url: template.image,
-          width: 1200,
-          height: 630,
-          alt: template.title,
-        },
-      ],
     },
   };
 }
@@ -36,9 +28,7 @@ const TemplateClient = dynamicImport<{ template: Template }>(
   { 
     ssr: false, 
     loading: () => (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
-        <div>Loading template...</div>
-      </div>
+      <p className="lg-wrap lg-small" style={{ paddingBlock: 60 }}>Loading…</p>
     )
   }
 );
@@ -48,18 +38,11 @@ export default function TemplatePage({ params }: { params: { templateId: string 
 
   if (!template) {
     return (
-      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center p-4">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-4">Template Not Found</h1>
-          <p className="text-gray-300 mb-6">The requested training template could not be found.</p>
-          <a 
-            href="/templates" 
-            className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-black bg-yellow-500 hover:bg-yellow-600"
-          >
-            Browse All Templates
-          </a>
-        </div>
-      </div>
+      <main className="lg-wrap" style={{ paddingBlock: 60 }}>
+        <h1 className="lg-h2">Program not found</h1>
+        <p className="lg-lede">That program doesn&apos;t exist anymore.</p>
+        <a className="lg-link" href="/templates">See all programs</a>
+      </main>
     );
   }
 

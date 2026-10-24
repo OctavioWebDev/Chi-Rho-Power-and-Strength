@@ -2,13 +2,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import FeaturedPost from './FeaturedPost'
-import BlogCard from './BlogCard'
-import RecentPostsSidebar from './RecentPostsSidebar'
-import CategoriesSidebar from './CategoriesSidebar'
-import NewsletterCTA from './NewsletterCTA'
-import ComingSoonNotice from './ComingSoonNotice'
-import PageHeader from './PageHeader'
+import { Entry, PageTitle } from '@/components/log'
 
 export default function BlogContent() {
   const searchParams = useSearchParams()
@@ -62,98 +56,40 @@ export default function BlogContent() {
     }
   ]
 
-  // Filter posts by category if one is selected
-  const filteredPosts = selectedCategory
-    ? allPosts.filter(post => post.category === selectedCategory)
-    : allPosts
-
-  const featuredPost = filteredPosts[0]
-  const recentPosts = filteredPosts.slice(1)
-
-  const categories = [
-    { name: 'Training Fundamentals', slug: 'training' },
-    { name: 'Technique & Form', slug: 'technique' },
-    { name: 'Programming', slug: 'programming' },
-    { name: 'Mindset', slug: 'mindset' },
-    { name: 'Nutrition & Recovery', slug: 'nutrition' }
-  ]
-
-  // Get category name for display
-  const getCategoryName = (slug: string) => {
-    const category = categories.find(cat => cat.slug === slug)
-    return category ? category.name : 'All Articles'
+  const categories: Record<string, string> = {
+    training: 'Training fundamentals',
+    technique: 'Technique & form',
+    programming: 'Programming',
+    mindset: 'Mindset',
+    nutrition: 'Nutrition & recovery',
   }
+  const posts = selectedCategory ? allPosts.filter((p) => p.category === selectedCategory) : allPosts
+  const label = selectedCategory ? categories[selectedCategory] ?? 'Articles' : null
 
   return (
-    <>
-      <PageHeader 
-        title={selectedCategory ? getCategoryName(selectedCategory) : "Training Articles"}
-        description={selectedCategory 
-          ? `Articles about ${getCategoryName(selectedCategory).toLowerCase()}`
-          : "Practical advice on strength training. No fluff."
-        }
-      />
-
-      {/* Show "View All" button if category is selected */}
-      {selectedCategory && (
-        <div className="text-center mb-8">
-          <Link 
-            href="/blog"
-            className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition-colors"
-          >
-            ← View All Articles
-          </Link>
-        </div>
-      )}
-
-      {/* Show message if no posts in category */}
-      {filteredPosts.length === 0 && (
-        <div className="text-center py-16">
-          <p className="text-gray-400 text-xl mb-6">
-            No articles in this category yet. Check back soon!
-          </p>
-          <Link
-            href="/blog"
-            className="inline-block bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-lg transition-colors"
-          >
-            View All Articles
-          </Link>
-        </div>
-      )}
-
-      {filteredPosts.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-12">
-          {/* Main Content */}
-          <div>
-            <FeaturedPost {...featuredPost} />
-
-            {/* Recent Posts Grid */}
-            {recentPosts.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {recentPosts.map((post) => (
-                  <BlogCard key={post.slug} {...post} />
-                ))}
+    <Entry label="Articles" sub={label ?? undefined}>
+      <PageTitle lede="Straight answers about getting stronger.">
+        From the <em>training log.</em>
+      </PageTitle>
+      {selectedCategory ? (
+        <p><Link className="lg-link" href="/blog">All articles</Link></p>
+      ) : null}
+      {posts.length === 0 ? (
+        <p className="lg-muted" style={{ marginTop: 24 }}>Nothing in this category yet.</p>
+      ) : (
+        <ul className="lg-articles">
+          {posts.map((p) => (
+            <li key={p.slug}>
+              <time>{p.date}</time>
+              <div>
+                <Link href={`/blog/${p.slug}`}>{p.title}</Link>
+                <p>{p.excerpt}</p>
               </div>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="space-y-8">
-            <RecentPostsSidebar 
-              posts={allPosts.slice(0, 5).map(post => ({
-                slug: post.slug,
-                title: post.title,
-                image: post.image,
-                date: post.date
-              }))} 
-            />
-            <CategoriesSidebar categories={categories} />
-            <NewsletterCTA />
-          </div>
-        </div>
+              <span className="len">{p.readTime.replace(' read', '')}</span>
+            </li>
+          ))}
+        </ul>
       )}
-
-      <ComingSoonNotice />
-    </>
+    </Entry>
   )
 }
