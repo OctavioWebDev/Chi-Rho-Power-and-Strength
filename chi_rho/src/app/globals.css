@@ -239,3 +239,6 @@ h1, h2, h3 { font-family: var(--font-display), 'Arial Narrow', sans-serif; text-
 .lg-offers b { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 34px; color: #EAB308; display: block; line-height: 1; margin-bottom: 6px; }
 .lg-offers p { color: #9C968A; font-size: 16px; margin: 0; }
 @media (max-width: 900px) { .lg-offers { grid-template-columns: minmax(0, 1fr); } }
+.lg-error { color: #E5484D; font-weight: 600; margin: 12px 0 0; }
+.lg-mt { margin-top: 26px; }
+.lg-rates .what .lg-checks { margin-top: 10px; }
