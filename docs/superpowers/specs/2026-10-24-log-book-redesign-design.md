@@ -98,7 +98,7 @@ Same colors and fonts as the Chi-Rho Lifts app (Iron & Brass), so the coaching s
 - Four link columns plus contact: Toledo, phone and email as selectable text.
 - No slogan.
 
-**Photos:** stock photos only where the mockup has a photo slot. Black and white, high contrast, no faces. Leave the slot out if no photo fits.
+**Photos:** none. The mockup's photo slots on the story and home pages are removed, along with the old stock images (`images.unsplash.com`), including blog post images.
 
 ## 6. Pages
 
@@ -177,12 +177,12 @@ The repo has no test runner. For this redesign:
 ## 9. Rollout
 
 - **One feature branch.** Build in order: tokens and fonts, then components, header and footer, then pages.
-- **One PR.** Review on its preview deploy at desktop and phone width. The host isn't recorded in the repo; Vercel is assumed. Confirm the host, and that merging to `main` deploys, before the PR.
+- **One PR.** The site is on Vercel. Review the PR's Vercel preview deploy at desktop and phone width.
 - **Merge only when Octavio says so.** Merging to `main` deploys the live site.
 
-## 10. Open items for Octavio
+## 10. Decisions
 
-1. **Stock photos:** which ones (if any) go in the story and home photo slots.
-2. **Book quote:** the mockup uses a line from chapter 1. Confirm it, or pick another.
-3. **Hosting:** where the site is hosted (Vercel?), and whether PRs get preview links.
-4. **The example log sheet:** the hero's numbers (315 squat PR, etc.) are an example. Keep them, or use your own week.
+- Photos: none (Octavio, 2026-10-24).
+- Hosting: Vercel (Octavio, 2026-10-24).
+- Book quote: the chapter 1 line already on `/book` ("You need three things: a barbell, progressive overload, and consistency"). Change it if Octavio picks another.
+- The hero log sheet's numbers are an example client's week. Swap them if Octavio wants his own.
