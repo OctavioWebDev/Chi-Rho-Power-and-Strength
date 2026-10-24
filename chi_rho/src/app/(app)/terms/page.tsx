@@ -6,7 +6,7 @@ export const metadata: Metadata = { title: 'Terms of service' }
 export default function TermsPage() {
   return (
     <main className="lg-wrap">
-      <Entry label="Terms of service" sub="Updated January 6, 2026">
+      <Entry label="Terms of service" sub="Updated October 24, 2026">
         <PageTitle>Terms of service</PageTitle>
         <div className="lg-post lg-mt">
             
@@ -105,14 +105,14 @@ export default function TermsPage() {
               
               <h3>Coaching Services</h3>
               <p>
-                Refunds for coaching services are handled on a case-by-case basis. Contact us within 14 days 
-                of purchase to request a refund.
+                You can get a full refund within 30 days of your first payment if you&apos;re not satisfied. 
+                After 30 days, payments are not refunded.
               </p>
 
               <h3>Digital Products</h3>
               <p>
-                Due to the digital nature of our templates and programs, refunds are generally not offered once 
-                the product has been downloaded. Contact us if you experience technical issues accessing your purchase.
+                You can get a full refund within 30 days of purchase if a program isn&apos;t for you. After 30 days, 
+                purchases are not refunded. Contact us if you have trouble accessing your purchase.
               </p>
 
               <h3>Physical Products</h3>

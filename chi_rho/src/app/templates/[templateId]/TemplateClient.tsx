@@ -64,7 +64,7 @@ export default function TemplateClient({ template }: TemplateClientProps) {
         <p className="lg-byline">
           <Link href="/templates">← Programs</Link> · {template.duration} · {template.frequency}
         </p>
-        {success ? <p className="lg-sent">Payment went through. Your download link is on its way by email.</p> : null}
+        {success ? <p className="lg-sent">Payment went through. Your download starts on the next page.</p> : null}
         {canceled ? <p className="lg-muted">Checkout canceled. Nothing was charged.</p> : null}
         <div className="lg-bookrow lg-mt">
           <Cover top="Chi-Rho" title={template.title} bottom={`${template.duration} · ${template.level}`} />
@@ -94,8 +94,8 @@ export default function TemplateClient({ template }: TemplateClientProps) {
           groups={[
             {
               items: [
-                { q: 'How do I get it after I pay?', a: "Right after checkout you get an email with the download link." },
-                { q: 'Money-back guarantee?', a: "Yes. 30 days. If it's not for you, you get your money back." },
+                { q: 'How do I get it after I pay?', a: 'The download starts on the page right after checkout. There is a download button there too.' },
+                { q: 'Money-back guarantee?', a: "Yes. Within 30 days, if it's not for you, you get your money back." },
                 { q: 'Can I ask questions about the program?', a: 'Yes. Email chirhostrength@gmail.com.' },
               ],
             },

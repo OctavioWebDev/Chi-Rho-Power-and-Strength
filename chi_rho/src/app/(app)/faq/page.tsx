@@ -32,9 +32,9 @@ const GROUPS: FaqGroup[] = [
     heading: 'Money',
     items: [
       { q: 'Why do you cost more than other online coaches?', a: "I'm not trying to run 100 clients, so everyone gets real attention. And you get a program built for you, not a template. Want cheap? There are plenty of options." },
-      { q: 'Can I cancel anytime?', a: "Yes. Full refund in month one if you're not satisfied. After that it's month to month with 30 days' notice. No contracts, no cancellation fees." },
+      { q: 'Can I cancel anytime?', a: "Yes. Full refund in the first 30 days if you're not satisfied. After that it's month to month with 30 days' notice. No contracts, no cancellation fees." },
       { q: 'Payment plans?', a: "Monthly billing is the plan. Pay 3, 6 or 12 months up front and save 5, 10 or 15%. No weekly billing or custom schedules." },
-      { q: "What's the refund policy?", a: "Full refund in the first 30 days if you're not satisfied. After that, no refunds for the rest of a month, but you won't be billed for the next one." },
+      { q: "What's the refund policy?", a: "Full refund in the first 30 days if you're not satisfied. After 30 days, no refunds. Cancel and you won't be billed for the next month." },
     ],
   },
   {

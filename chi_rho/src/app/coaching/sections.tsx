@@ -155,7 +155,7 @@ export function AddOns() {
 
 const OFFERS = [
   { big: '8 weeks', text: "You'll see measurable strength gains in the first 8 weeks. Numbers in the log, not feelings." },
-  { big: 'Month 1', text: "Full refund if you're not satisfied. After that it's month to month with 30 days' notice. No contracts." },
+  { big: '30 days', text: "Full refund in the first 30 days if you're not satisfied. After that it's month to month with 30 days' notice. No contracts." },
   { big: '15% off', text: 'Bought Shut Up and Lift? Show the receipt and your first month is 15% off.' },
   { big: '$50', text: 'Refer a friend who signs up and you get $50. He gets $25 off his first month.' },
   { big: '5 · 10 · 15%', text: 'Pay 3, 6 or 12 months up front and save 5, 10 or 15%.' },
@@ -207,7 +207,7 @@ export const ONLINE_FAQ = [
   { q: 'What equipment do I need?', a: 'A barbell, a rack and plates works best. I can adapt for dumbbells, but the barbell gets better results. Elite clients: I work with whatever you have.' },
   { q: 'How often will we talk?', a: 'Strength: weekly check-ins in the app plus a call every two weeks. Elite: a video call every two weeks plus daily messages.' },
   { q: "I'm a complete beginner. Is this for me?", a: 'Online works best once you have about 6 months under the bar. Brand new? Start in person to learn the lifts, or start online and study the form videos closely.' },
-  { q: 'Can I cancel anytime?', a: "Yes. Full refund in month one if you're not satisfied. After that it's month to month with 30 days' notice." },
+  { q: 'Can I cancel anytime?', a: "Yes. Full refund in the first 30 days if you're not satisfied. After that it's month to month with 30 days' notice." },
   { q: 'What if I miss workouts?', a: "Tell me what's going on and I'll adjust the program. Pick up where you left off." },
 ];
 
@@ -216,6 +216,6 @@ export const IN_PERSON_FAQ = [
   { q: 'Do I need experience?', a: "No. If you're brand new we start with the basics and build from there. Show up ready to work." },
   { q: 'What if I miss a session?', a: 'Give me a heads-up and we reschedule when we can. The monthly rate covers the coaching, not single sessions.' },
   { q: 'Can I get help between sessions?', a: 'Priority messages are included. Want programming for the days I\'m not there? Bring it up on the call.' },
-  { q: 'Can I cancel anytime?', a: "Yes. Full refund in month one if you're not satisfied. After that it's month to month with 30 days' notice. No contracts." },
+  { q: 'Can I cancel anytime?', a: "Yes. Full refund in the first 30 days if you're not satisfied. After that it's month to month with 30 days' notice. No contracts." },
   { q: 'How fast will I see results?', a: 'Most clients hit their first PRs in 4 to 6 weeks of training consistently.' },
 ];
