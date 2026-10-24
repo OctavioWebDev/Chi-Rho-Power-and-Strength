@@ -3,7 +3,6 @@ import "./globals.css";
 import { Metadata } from 'next';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import BackButton from "./components/BackButton";
 
 const display = Barlow_Condensed({ weight: ['500', '600', '700', '800'], subsets: ['latin'], variable: '--font-display' });
 const body = Barlow({ weight: ['400', '500', '600'], style: ['normal', 'italic'], subsets: ['latin'], variable: '--font-body' });
@@ -63,7 +62,6 @@ export default function RootLayout({
       </head>
       <body className="bg-iron text-chalk font-body antialiased">
         <Header />
-        <BackButton />
         {children}
         <Footer />
       </body>
