@@ -31,7 +31,7 @@ export default function OnlineCoaching() {
       ],
       guarantee: 'See measurable strength gains in first 8 weeks',
       cta: 'Start Coaching',
-      href: '/contact?service=strength-coaching',
+      href: '/apply?service=strength-coaching',
       popular: true
     },
     {
@@ -57,7 +57,7 @@ export default function OnlineCoaching() {
       ],
       bonus: 'Free copy of "Shut Up and Lift" + training journal',
       cta: 'Apply Now',
-      href: '/contact?service=elite',
+      href: '/apply?service=elite',
       popular: false
     }
   ];
@@ -306,13 +306,13 @@ export default function OnlineCoaching() {
           </p>
           <div className="space-y-4 sm:space-y-0 sm:space-x-4">
             <Link 
-              href="/contact" 
+              href="/apply" 
               className="inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg transition duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform"
             >
               Apply for Online Coaching
             </Link>
             <Link 
-              href="/contact?service=discovery-call" 
+              href="/apply?service=discovery-call" 
               className="inline-block bg-transparent border-2 border-yellow-500 hover:bg-yellow-500 hover:text-gray-900 text-yellow-500 font-bold py-4 px-8 rounded-lg transition duration-200"
             >
               Schedule a Free Discovery Call

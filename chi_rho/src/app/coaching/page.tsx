@@ -30,7 +30,7 @@ export default function CoachingPage() {
         'Guys balancing training with demanding careers and family',
       ],
       cta: 'Apply Now',
-      href: '/contact?service=strength-coaching',
+      href: '/apply?service=strength-coaching',
       popular: true,
       color: 'border-yellow-500',
     },
@@ -57,7 +57,7 @@ export default function CoachingPage() {
         'Executives and professionals who value premium service',
       ],
       cta: 'Apply Now',
-      href: '/contact?service=elite',
+      href: '/apply?service=elite',
       popular: false,
       color: 'border-gray-700',
     },
@@ -120,7 +120,7 @@ export default function CoachingPage() {
               See Coaching Packages
             </Link>
             <Link
-              href="/contact?service=discovery-call"
+              href="/apply?service=discovery-call"
               className="inline-block bg-transparent border-2 border-yellow-500 hover:bg-yellow-500 hover:text-gray-900 text-yellow-500 font-bold py-4 px-8 rounded-lg transition duration-200"
             >
               Free Discovery Call
@@ -310,7 +310,7 @@ export default function CoachingPage() {
                 One consultation, then a custom program built for you — your choice of 8, 12, or 16 weeks. For the DIY lifter who wants expert programming without ongoing coaching.
               </p>
               <Link
-                href="/contact?service=consultation-program"
+                href="/apply?service=consultation-program"
                 className="text-yellow-500 hover:text-yellow-400 text-sm font-semibold"
               >
                 Learn More →
@@ -323,7 +323,7 @@ export default function CoachingPage() {
                 Submit videos of your squat, bench, and deadlift. Get a detailed written analysis with specific corrections and drill recommendations. Follow-up review included.
               </p>
               <Link
-                href="/contact?service=technique-audit"
+                href="/apply?service=technique-audit"
                 className="text-yellow-500 hover:text-yellow-400 text-sm font-semibold"
               >
                 Learn More →
@@ -336,7 +336,7 @@ export default function CoachingPage() {
                 8-week peaking protocol with attempt selection, weight cut management (if needed), and day-of support. For lifters with an upcoming powerlifting meet.
               </p>
               <Link
-                href="/contact?service=comp-prep"
+                href="/apply?service=comp-prep"
                 className="text-yellow-500 hover:text-yellow-400 text-sm font-semibold"
               >
                 Learn More →
@@ -468,7 +468,7 @@ export default function CoachingPage() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/contact?service=discovery-call"
+              href="/apply?service=discovery-call"
               className="inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-10 rounded-lg transition duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform text-lg"
             >
               Schedule a Free Discovery Call

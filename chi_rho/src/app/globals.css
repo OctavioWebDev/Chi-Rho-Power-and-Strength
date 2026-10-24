@@ -190,3 +190,25 @@ h1, h2, h3 { font-family: var(--font-display), 'Arial Narrow', sans-serif; text-
   .lg-brand small { display: none; }
   .lg-apply { padding: 8px 12px; }
 }
+
+/* apply form */
+.lg-form { max-width: 900px; margin-top: 8px; }
+.lg-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 28px; margin-top: 18px; }
+.lg-field.full { grid-column: 1 / -1; }
+.lg-field { border: 0; padding: 0; margin: 0; min-width: 0; }
+.lg-field label, .lg-field legend { display: block; font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 19px; text-transform: uppercase; letter-spacing: .02em; color: #1A1712; padding: 0; }
+.lg-field small { display: block; font-weight: 500; font-size: 13px; letter-spacing: .1em; color: #6D675C; }
+.lg-field input[type="text"], .lg-field input[type="email"], .lg-field input[type="tel"], .lg-field textarea, .lg-lifts input {
+  width: 100%; background: transparent; border: 0; border-bottom: 1.5px solid #1A1712; border-radius: 0; padding: 4px 2px; margin-top: 2px;
+  font-family: var(--font-display), sans-serif; font-size: 21px; font-weight: 600; color: #1A1712; color-scheme: light;
+}
+.lg-field textarea { resize: vertical; line-height: 32px; border-bottom: 0; background-image: repeating-linear-gradient(transparent 0 31px, #1A1712 31px 32px); padding-top: 0; }
+.lg-lifts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.lg-opts { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 8px; }
+.lg-opts label { display: flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 600; text-transform: none; letter-spacing: 0; }
+.lg-opts input { width: 18px; height: 18px; accent-color: #1A1712; margin: 0; }
+.lg-errors { margin: 22px 0 0; padding: 0; list-style: none; font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 18px; color: #9B1C1C; }
+.lg-errors-inline { font-weight: 600; color: #9B1C1C; }
+.lg-form-actions { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+.lg-sent { margin-top: 24px; font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 22px; text-transform: uppercase; }
+@media (max-width: 680px) { .lg-form-grid, .lg-lifts { grid-template-columns: minmax(0, 1fr); } }

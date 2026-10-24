@@ -148,7 +148,7 @@ export default function GroupClassTraining() {
               </ul>
 
               <Link
-                href="/contact?service=group-class"
+                href="/apply?service=group-class"
                 className="block w-full text-center bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-6 rounded-lg transition duration-200"
               >
                 Reserve Your Spot
@@ -200,7 +200,7 @@ export default function GroupClassTraining() {
                 </div>
                 <p className="text-gray-400 text-sm leading-relaxed mb-4">{cls.description}</p>
                 <Link
-                  href={`/contact?service=group-class&class=${cls.name.toLowerCase().replace(/\s+/g, '-')}`}
+                  href={`/apply?service=group-class&class=${cls.name.toLowerCase().replace(/\s+/g, '-')}`}
                   className="block w-full text-center bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2.5 px-4 rounded-lg transition duration-200 text-sm"
                 >
                   Reserve a Spot
@@ -308,13 +308,13 @@ export default function GroupClassTraining() {
           </p>
           <div className="space-y-4 sm:space-y-0 sm:space-x-4">
             <Link
-              href="/contact?service=group-class"
+              href="/apply?service=group-class"
               className="inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg transition duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform"
             >
               Reserve Your Spot
             </Link>
             <Link
-              href="/contact?service=discovery-call"
+              href="/apply?service=discovery-call"
               className="inline-block bg-transparent border-2 border-yellow-500 hover:bg-yellow-500 hover:text-gray-900 text-yellow-500 font-bold py-4 px-8 rounded-lg transition duration-200"
             >
               Schedule a Free Discovery Call

@@ -73,7 +73,7 @@ export default function HowItWorks() {
 
         <div className="mt-16 text-center">
           <Link 
-            href="/contact"
+            href="/apply"
             className="inline-block bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold py-4 px-8 rounded-lg transition duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform"
           >
             Apply for Coaching

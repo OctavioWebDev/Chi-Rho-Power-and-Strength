@@ -93,7 +93,7 @@ const HeroCarousel = () => {
                 View Coaching Options
               </Link>
               <Link
-                href="/contact?service=discovery-call"
+                href="/apply?service=discovery-call"
                 className="inline-block bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white font-bold py-2.5 px-6 md:py-3 md:px-8 rounded-lg transition duration-200 text-center text-sm md:text-base"
               >
                 Free Discovery Call

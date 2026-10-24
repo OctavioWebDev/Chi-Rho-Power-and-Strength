@@ -143,7 +143,7 @@ export default function PrivacyPage() {
                 <strong className="text-white">Email:</strong> chirhostrength@gmail.com
               </p>
               <p className="text-gray-300 leading-relaxed">
-                <strong className="text-white">Website:</strong> <a href="/contact" className="text-yellow-400 hover:underline">Contact Form</a>
+                <strong className="text-white">Website:</strong> <a href="/apply" className="text-yellow-400 hover:underline">Contact Form</a>
               </p>
             </section>
 
