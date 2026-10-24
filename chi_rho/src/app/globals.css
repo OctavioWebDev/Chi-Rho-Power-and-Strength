@@ -243,3 +243,9 @@ h1, h2, h3 { font-family: var(--font-display), 'Arial Narrow', sans-serif; text-
 .lg-mt { margin-top: 26px; }
 .lg-rates .what .lg-checks { margin-top: 10px; }
 .lg-footer p, .lg-sel { overflow-wrap: anywhere; }
+.lg-sign { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 24px; text-transform: uppercase; letter-spacing: .06em; }
+.lg-sign small { display: block; font-weight: 500; font-size: 15px; color: #9C968A; letter-spacing: .12em; }
+.lg-crossed ul { list-style: none; margin: 0; padding: 0; }
+.lg-crossed li { padding: 12px 0; border-bottom: 1px solid rgba(26,23,18,.09); }
+.lg-crossed s { font-family: var(--font-display), sans-serif; font-weight: 700; font-size: 24px; text-transform: uppercase; text-decoration-color: #6D675C; text-decoration-thickness: 2px; }
+.lg-crossed span { display: block; font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 17px; color: #6D675C; margin-top: 4px; }
