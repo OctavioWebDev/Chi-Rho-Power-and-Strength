@@ -1,11 +1,12 @@
-import { Inter } from 'next/font/google';
+import { Barlow, Barlow_Condensed } from 'next/font/google';
 import "./globals.css";
 import { Metadata } from 'next';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BackButton from "./components/BackButton";
 
-const inter = Inter({ subsets: ['latin'] });
+const display = Barlow_Condensed({ weight: ['500', '600', '700', '800'], subsets: ['latin'], variable: '--font-display' });
+const body = Barlow({ weight: ['400', '500', '600'], style: ['normal', 'italic'], subsets: ['latin'], variable: '--font-body' });
 
 export const metadata: Metadata = {
   title: {
@@ -14,8 +15,8 @@ export const metadata: Metadata = {
   },
   description: "Simplicity, Progressive Overload, Consistency - Simple, effective strength training without the industry garbage.",
   keywords: ['strength training', 'fitness', 'bodyweight exercises', 'workout plans', 'health and wellness'],
-  authors: [{ name: 'Your Name' }],
-  creator: 'Your Name',
+  authors: [{ name: 'Octavio Sanchez' }],
+  creator: 'Octavio Sanchez',
   publisher: 'Chi-Rho Power & Strength',
   metadataBase: new URL('https://www.chirhostrength.com/'),
   openGraph: {
@@ -52,15 +53,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon?<generated>" type="image/png" sizes="32x32" />
         <link rel="apple-touch-icon" href="/apple-icon?<generated>" type="image/png" sizes="180x180" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#000000" />
+        <meta name="theme-color" content="#0B0A08" />
       </head>
-      <body className="bg-black">
+      <body className="bg-iron text-chalk font-body antialiased">
         <Header />
         <BackButton />
         {children}
