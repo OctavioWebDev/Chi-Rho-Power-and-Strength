@@ -4,21 +4,12 @@ import emailjs from '@emailjs/browser';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Sheet } from '@/components/log';
-import { EMPTY_FORM, SERVICES, buildApplyParams, serviceFromParam, validateApply, type ApplyForm as Form } from '@/lib/apply';
+import {
+  EMPTY_FORM, OPTIONS, SERVICES, buildApplyParams, serviceFromParam, validateApply,
+  type ApplyForm as Form, type ChoiceField,
+} from '@/lib/apply';
 
-type Field = { key: keyof Form; label: string; hint?: string; long?: boolean; half?: boolean; type?: string; auto?: string };
-
-const FIELDS: Field[] = [
-  { key: 'name', label: 'Name', half: true, auto: 'name' },
-  { key: 'email', label: 'Email', half: true, type: 'email', auto: 'email' },
-  { key: 'phone', label: 'Phone', hint: 'Optional', half: true, type: 'tel', auto: 'tel' },
-  { key: 'age', label: 'How old are you?', half: true },
-  { key: 'weight', label: 'What do you weigh?', half: true },
-  { key: 'years', label: 'How long have you been training?', half: true },
-  { key: 'now', label: 'What are you doing now, and why?', hint: 'Program, days a week, where you train', long: true },
-  { key: 'logic', label: 'Can you explain the logic behind it?', long: true },
-  { key: 'eating', label: 'What are you eating?', long: true },
-];
+type Text = { key: keyof Form; label: string; required?: boolean; hint?: string; type?: string; auto?: string; half?: boolean; long?: boolean; placeholder?: string };
 
 export default function ApplyForm() {
   const params = useSearchParams();
@@ -31,7 +22,7 @@ export default function ApplyForm() {
     if (s) setForm((f) => ({ ...f, service: s }));
   }, [params]);
 
-  const set = (k: keyof Form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+  const set = (k: keyof Form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   async function onSubmit(e: React.FormEvent) {
@@ -54,71 +45,109 @@ export default function ApplyForm() {
     }
   }
 
-  const input = (f: Field) => (
+  const label = (text: string, required?: boolean, hint?: string) => (
+    <>
+      {text}
+      {required ? <span className="lg-req" aria-hidden="true"> *</span> : null}
+      {hint ? <small>{hint}</small> : null}
+    </>
+  );
+
+  const text = (f: Text) => (
     <div key={f.key} className={f.half ? 'lg-field' : 'lg-field full'}>
-      <label htmlFor={`f-${f.key}`}>
-        {f.label}
-        {f.hint ? <small>{f.hint}</small> : null}
-      </label>
+      <label htmlFor={`f-${f.key}`}>{label(f.label, f.required, f.hint)}</label>
       {f.long ? (
-        <textarea id={`f-${f.key}`} name={f.key} value={form[f.key]} onChange={set(f.key)} rows={3} />
+        <textarea id={`f-${f.key}`} name={f.key} value={form[f.key]} onChange={set(f.key)} rows={3} aria-required={f.required} placeholder={f.placeholder} />
       ) : (
-        <input id={`f-${f.key}`} name={f.key} type={f.type ?? 'text'} autoComplete={f.auto} value={form[f.key]} onChange={set(f.key)} />
+        <input id={`f-${f.key}`} name={f.key} type={f.type ?? 'text'} autoComplete={f.auto} value={form[f.key]} onChange={set(f.key)} aria-required={f.required} placeholder={f.placeholder} />
       )}
+    </div>
+  );
+
+  const choice = (key: ChoiceField, q: string, half = true) => (
+    <div key={key} className={half ? 'lg-field' : 'lg-field full'}>
+      <label htmlFor={`f-${key}`}>{label(q, true)}</label>
+      <select id={`f-${key}`} name={key} value={form[key]} onChange={set(key)} aria-required>
+        <option value="">Select…</option>
+        {OPTIONS[key].map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
     </div>
   );
 
   return (
     <form onSubmit={onSubmit} noValidate className="lg-form">
-      <Sheet title="Chi-Rho intake" caption="Page 1 of 1">
+      <Sheet title="Chi-Rho intake" caption="* Required">
+        <h3 className="lg-form-section">About you</h3>
         <div className="lg-form-grid">
-          {FIELDS.map(input)}
-          <div className="lg-field full">
-            <label>
-              Best lifts right now<small>Weight × reps. Leave blank if you don&apos;t know</small>
-            </label>
-            <div className="lg-lifts">
-              {(['squat', 'bench', 'deadlift'] as const).map((k) => (
-                <div key={k}>
-                  <label htmlFor={`f-${k}`}>
-                    <small>{k === 'bench' ? 'Bench' : k === 'squat' ? 'Squat' : 'Deadlift'}</small>
-                  </label>
-                  <input id={`f-${k}`} name={k} value={form[k]} onChange={set(k)} />
-                </div>
-              ))}
-            </div>
-          </div>
-          {input({ key: 'hurt', label: 'Injuries, conditions or medications?', hint: 'Your doctor makes the medical calls. I build around them' })}
-          {input({ key: 'schedule', label: 'Your schedule', hint: 'Shift work is fine. I train around overnights myself' })}
-          <fieldset className="lg-field full">
-            <legend>Which coaching?</legend>
-            <div className="lg-opts">
-              {SERVICES.map((s) => (
-                <label key={s.id}>
-                  <input
-                    type="radio"
-                    name="service"
-                    value={s.id}
-                    checked={form.service === s.id}
-                    onChange={() => setForm((f) => ({ ...f, service: s.id }))}
-                  />
-                  {s.label}
-                </label>
-              ))}
-            </div>
-          </fieldset>
+          {text({ key: 'fullName', label: 'Full name', required: true, half: true, auto: 'name' })}
+          {text({ key: 'email', label: 'Email address', required: true, half: true, type: 'email', auto: 'email' })}
+          {text({ key: 'phone', label: 'Phone number', hint: 'Optional', half: true, type: 'tel', auto: 'tel' })}
+          {text({ key: 'location', label: 'Location', hint: 'City, state', required: true, half: true, placeholder: 'Toledo, OH' })}
+          {text({ key: 'age', label: 'Age', hint: 'Optional', half: true, type: 'number' })}
         </div>
+
+        <h3 className="lg-form-section">Which coaching?</h3>
+        <fieldset className="lg-field full">
+          <legend>{label('Coaching package', true)}</legend>
+          <div className="lg-opts">
+            {SERVICES.map((s) => (
+              <label key={s.value}>
+                <input
+                  type="radio"
+                  name="service"
+                  value={s.value}
+                  checked={form.service === s.value}
+                  onChange={() => setForm((f) => ({ ...f, service: s.value }))}
+                />
+                {s.label}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <h3 className="lg-form-section">Your training</h3>
+        <div className="lg-form-grid">
+          {choice('trainingExperience', 'How long have you been training consistently?')}
+          {choice('currentFrequency', 'How many days per week can you train?')}
+          {choice('equipmentAccess', 'What equipment do you have access to?', false)}
+        </div>
+
+        <h3 className="lg-form-section">Current lifts <small>Optional, but helpful</small></h3>
+        <div className="lg-lifts">
+          {text({ key: 'currentSquat', label: 'Squat (lbs)', half: true, placeholder: 'e.g. 225' })}
+          {text({ key: 'currentBench', label: 'Bench press (lbs)', half: true, placeholder: 'e.g. 185' })}
+          {text({ key: 'currentDeadlift', label: 'Deadlift (lbs)', half: true, placeholder: 'e.g. 315' })}
+        </div>
+
+        <h3 className="lg-form-section">Goals</h3>
+        <div className="lg-form-grid">
+          {choice('primaryGoal', "What's your primary training goal?", false)}
+          {text({ key: 'biggestChallenge', label: "What's your biggest challenge right now?", required: true, long: true })}
+          {choice('timeline', "What's your timeline/commitment level?", false)}
+        </div>
+
+        <h3 className="lg-form-section">Getting started</h3>
+        <div className="lg-form-grid">
+          {choice('startDate', 'When do you want to start?')}
+          {choice('heardAbout', 'How did you hear about Chi-Rho Power and Strength?')}
+          {choice('readBook', 'Have you read "Shut Up and Lift"?')}
+        </div>
+
+        <div className="lg-form-grid">
+          {text({ key: 'additionalInfo', label: 'Is there anything else I should know?', hint: 'Optional', long: true })}
+        </div>
+
         {errors.length ? (
           <ul className="lg-errors" role="alert">
             {errors.map((m) => <li key={m}>{m}</li>)}
           </ul>
         ) : null}
         {state === 'sent' ? (
-          <p className="lg-sent" role="status">Got it. I&apos;ll read it and get back to you.</p>
+          <p className="lg-sent" role="status">Got it. I&apos;ll read it and get back to you within 24–48 hours.</p>
         ) : (
           <div className="lg-form-actions">
             <button className="lg-btn" type="submit" disabled={state === 'sending'}>
-              {state === 'sending' ? 'Sending…' : 'Send it'}
+              {state === 'sending' ? 'Sending…' : 'Send application'}
             </button>
             {state === 'failed' ? (
               <span className="lg-errors-inline" role="alert">That didn&apos;t send. Try again, or email chirhostrength@gmail.com.</span>

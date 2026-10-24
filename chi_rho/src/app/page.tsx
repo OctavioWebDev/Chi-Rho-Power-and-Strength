@@ -78,7 +78,7 @@ export default function Home() {
           </ul>
         </Sheet>
         <p className="lg-after">
-          Answer those in your application. That&apos;s where we start. <ButtonLink href="/apply" variant="line">Fill it out</ButtonLink>
+          That&apos;s where we start. <ButtonLink href="/apply" variant="line">Apply</ButtonLink>
         </p>
       </Entry>
 

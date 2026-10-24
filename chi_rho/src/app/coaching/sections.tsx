@@ -182,7 +182,7 @@ export function HowItStarts() {
     <Entry label="How it starts">
       <Steps
         items={[
-          { title: 'Apply', text: 'Training history, goals, what you eat, your schedule.', here: true },
+          { title: 'Apply', text: 'Your training history, equipment, goals and when you want to start.', here: true },
           { title: '20-minute call', text: "We make sure it's a fit. You ask anything." },
           { title: 'Assessment', text: 'We find your baselines. You get the app and your first program in it.' },
           { title: 'Train and log', text: "Show up, do the work, write it down. I'll handle the adjustments." },
