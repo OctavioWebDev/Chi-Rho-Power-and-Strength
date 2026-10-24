@@ -226,3 +226,16 @@ h1, h2, h3 { font-family: var(--font-display), 'Arial Narrow', sans-serif; text-
   .lg-hero, .lg-name { grid-template-columns: minmax(0, 1fr); }
   .lg-name { gap: 20px; } .lg-seal { max-width: 120px; }
 }
+
+/* coaching */
+.lg-pkg { padding-top: 26px; }
+.lg-pkg-tag { font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: #6D675C; margin: 0 0 6px; }
+.lg-pkg .lg-h3 { font-size: 30px; }
+.lg-pkg-price { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 46px; color: #8A6A12; line-height: 1; margin: 10px 0 8px; font-variant-numeric: tabular-nums; }
+.lg-pkg-price small { font-size: 18px; color: #6D675C; font-weight: 500; }
+.lg-pkg-for { margin: 14px 0 18px; font-size: 16px; }
+.lg-offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 22px; }
+.lg-offers div { border-top: 2px solid #F4F1EA; padding-top: 12px; }
+.lg-offers b { font-family: var(--font-display), sans-serif; font-weight: 800; font-size: 34px; color: #EAB308; display: block; line-height: 1; margin-bottom: 6px; }
+.lg-offers p { color: #9C968A; font-size: 16px; margin: 0; }
+@media (max-width: 900px) { .lg-offers { grid-template-columns: minmax(0, 1fr); } }
