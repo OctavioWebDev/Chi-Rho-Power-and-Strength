@@ -242,3 +242,4 @@ h1, h2, h3 { font-family: var(--font-display), 'Arial Narrow', sans-serif; text-
 .lg-error { color: #E5484D; font-weight: 600; margin: 12px 0 0; }
 .lg-mt { margin-top: 26px; }
 .lg-rates .what .lg-checks { margin-top: 10px; }
+.lg-footer p, .lg-sel { overflow-wrap: anywhere; }
