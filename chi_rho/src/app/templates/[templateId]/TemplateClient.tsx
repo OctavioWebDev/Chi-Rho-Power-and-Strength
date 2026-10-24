@@ -96,7 +96,7 @@ export default function TemplateClient({ template }: TemplateClientProps) {
               items: [
                 { q: 'How do I get it after I pay?', a: "Right after checkout you get an email with the download link." },
                 { q: 'Money-back guarantee?', a: "Yes. 30 days. If it's not for you, you get your money back." },
-                { q: 'Can I ask questions about the program?', a: 'Yes. Email support@chirhostrength.com.' },
+                { q: 'Can I ask questions about the program?', a: 'Yes. Email chirhostrength@gmail.com.' },
               ],
             },
           ]}

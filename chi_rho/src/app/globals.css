@@ -273,3 +273,7 @@ h1, h2, h3 { font-family: var(--font-display), 'Arial Narrow', sans-serif; text-
 @media (max-width: 680px) { .lg-articles li { grid-template-columns: minmax(0, 1fr); gap: 2px; } .lg-articles .len { display: none; } .lg-post { font-size: 17px; } }
 .lg-cover b { overflow-wrap: break-word; }
 .lg-cover.long b { font-size: 28px; line-height: .95; }
+.lg-quiz { list-style: none; margin: 26px 0 0; padding: 0; border-top: 2px solid #F4F1EA; max-width: 760px; }
+.lg-quiz button { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid #2A261F; color: #F4F1EA; padding: 16px 4px; font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 22px; cursor: pointer; }
+.lg-quiz button:hover { color: #EAB308; }
+.lg-post ul { list-style: disc; } .lg-post ol { list-style: decimal; }
