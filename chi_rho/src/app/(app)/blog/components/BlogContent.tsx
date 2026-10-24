@@ -14,7 +14,6 @@ export default function BlogContent() {
       title: 'Progressive Overload: The Only Principle That Matters',
       excerpt: 'Understanding the single most important concept for building strength. Everything else is just details.',
       category: 'training',
-      image: '/assets/images/samuel-girven-VJ2s0c20qCo-unsplash.jpg',
       date: 'January 6, 2026',
       readTime: '8 min read'
     },
@@ -23,7 +22,6 @@ export default function BlogContent() {
       title: 'Stop Program Hopping',
       excerpt: 'Why switching programs every 6 weeks is killing your progress.',
       category: 'training',
-      image: '/assets/images/delaney-van-I72QeY20Q7o-unsplash.jpg',
       date: 'January 5, 2026',
       readTime: '6 min read'
     },
@@ -32,7 +30,6 @@ export default function BlogContent() {
       title: '5 Mistakes Every Beginner Makes',
       excerpt: 'Learn from my failures so you don\'t waste years like I did.',
       category: 'training',
-      image: '/assets/images/jan-kahanek-fVUl6kzIvLg-unsplash.jpg',
       date: 'January 4, 2026',
       readTime: '7 min read'
     },
@@ -41,7 +38,6 @@ export default function BlogContent() {
       title: 'Squat Form: The Basics',
       excerpt: 'Master the most important lift with these fundamental cues.',
       category: 'technique',
-      image: '/assets/images/cathy-mu-UWFjqxYWAmA-unsplash.jpg',
       date: 'January 3, 2026',
       readTime: '10 min read'
     },
@@ -50,7 +46,6 @@ export default function BlogContent() {
       title: 'Consistency > Perfection',
       excerpt: 'Why showing up beats optimization every single time.',
       category: 'mindset',
-      image: '/assets/images/joshua-hoehne-0F4duBPWlCw-unsplash.jpg',
       date: 'January 2, 2026',
       readTime: '5 min read'
     }

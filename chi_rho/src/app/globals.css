@@ -277,3 +277,4 @@ h1, h2, h3 { font-family: var(--font-display), 'Arial Narrow', sans-serif; text-
 .lg-quiz button { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid #2A261F; color: #F4F1EA; padding: 16px 4px; font-family: var(--font-display), sans-serif; font-weight: 600; font-size: 22px; cursor: pointer; }
 .lg-quiz button:hover { color: #EAB308; }
 .lg-post ul { list-style: disc; } .lg-post ol { list-style: decimal; }
+.lg-byline { overflow-wrap: break-word; line-height: 1.5; }

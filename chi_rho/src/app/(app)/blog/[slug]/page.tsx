@@ -11,7 +11,6 @@ const blogPosts: Record<string, {
     excerpt: string
     content: string
     category: string
-    image: string
     date: string
     readTime: string
     author: string
@@ -86,7 +85,6 @@ const blogPosts: Record<string, {
       <p>Stop worrying about optimal rep ranges, perfect exercise selection, and advanced techniques. Focus on progressive overload. Everything else is just details.</p>
     `,
         category: 'Training',
-        image: '/assets/images/samuel-girven-VJ2s0c20qCo-unsplash.jpg',
         date: 'January 6, 2026',
         readTime: '8 min read',
         author: 'Octavio Sanchez'
@@ -163,7 +161,6 @@ const blogPosts: Record<string, {
       <p>The program doesn't matter nearly as much as you think. Your consistency matters more than anything else.</p>
     `,
         category: 'Training',
-        image: '/assets/images/delaney-van-I72QeY20Q7o-unsplash.jpg',
         date: 'January 5, 2026',
         readTime: '6 min read',
         author: 'Octavio Sanchez'
@@ -232,7 +229,6 @@ const blogPosts: Record<string, {
       <p>Everything else is noise.</p>
     `,
         category: 'Training',
-        image: '/assets/images/jan-kahanek-fVUl6kzIvLg-unsplash.jpg',
         date: 'January 4, 2026',
         readTime: '7 min read',
         author: 'Octavio Sanchez'
@@ -355,7 +351,6 @@ const blogPosts: Record<string, {
     <p>Everything else is just details.</p>
   `,
         category: 'Technique',
-        image: '/assets/images/cathy-mu-UWFjqxYWAmA-unsplash.jpg',
         date: 'January 3, 2026',
         readTime: '10 min read',
         author: 'Octavio Sanchez'
@@ -373,7 +368,7 @@ const blogPosts: Record<string, {
 
     <h2>The Myth of the Perfect Program</h2>
 
-    <p>There is no perfect program. There's no magic combination of sets, reps, and exercises that will unlock gains faster than everything else.</p>
+    <p>There is no perfect program. There's no magic combination of sets, reps, and exercises that makes you stronger faster than everything else.</p>
 
     <p>5x5 works. 5/3/1 works. Starting Strength works. Texas Method works. Even a mediocre program works if you follow it consistently.</p>
 
@@ -490,7 +485,6 @@ const blogPosts: Record<string, {
     <p>Consistency always wins.</p>
   `,
         category: 'Mindset',
-        image: '/assets/images/joshua-hoehne-0F4duBPWlCw-unsplash.jpg',
         date: 'January 2, 2026',
         readTime: '5 min read',
         author: 'Octavio Sanchez'
