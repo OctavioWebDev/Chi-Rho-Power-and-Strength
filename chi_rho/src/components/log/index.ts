@@ -11,3 +11,4 @@ export { Faq, type FaqGroup } from './Faq';
 export { Seal } from './Seal';
 export { Cover } from './Cover';
 export { ButtonLink } from './Button';
+export { BarbellProgress } from './BarbellProgress';
