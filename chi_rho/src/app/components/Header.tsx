@@ -34,7 +34,7 @@ export default function Header() {
     <header className="lg-header">
       <div className="lg-wrap lg-header-row">
         <Link href="/" className="lg-brand" aria-label="Chi-Rho Power and Strength, home">
-          <Seal size={46} />
+          <Seal size={52} />
           <span>
             <b>Chi-Rho</b>
             <small>Power &amp; Strength</small>
