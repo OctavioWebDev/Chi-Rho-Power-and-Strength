@@ -2,6 +2,7 @@
 import dynamicImport from 'next/dynamic';
 import { Template } from '@/types/template';
 import { templates } from '../templates';
+import { pageMeta } from '@/lib/seo';
 
 // This is a server component that fetches the template data
 export const dynamic = 'force-dynamic';
@@ -12,14 +13,7 @@ export async function generateMetadata({ params }: { params: { templateId: strin
     description: 'The requested training template could not be found.'
   };
 
-  return {
-    title: template.title,
-    description: template.description,
-    openGraph: {
-      title: template.title,
-      description: template.description,
-    },
-  };
+  return pageMeta(template.title, template.description);
 }
 
 // Dynamically import the client component with no SSR since it uses browser APIs

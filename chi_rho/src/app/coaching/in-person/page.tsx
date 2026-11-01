@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import { ButtonLink, Entry, PageTitle } from '@/components/log';
 import { CoachingFaq, HowItStarts, IN_PERSON_FAQ, InPerson, TheDeal } from '../sections';
+import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'In-person coaching',
-  description: 'In-person strength coaching in Toledo, Ohio. Three coached sessions a week, $1,150 a month.',
-};
+export const metadata: Metadata = pageMeta('In-person coaching', 'In-person strength coaching in Toledo, Ohio. Three coached sessions a week, $1,150 a month.');
 
 export default function InPersonCoachingPage() {
   return (

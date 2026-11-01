@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { ButtonLink, Entry, Faq, PageTitle, type FaqGroup } from '@/components/log';
+import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'FAQ',
-  description: 'Straight answers about Chi-Rho coaching: beginners, equipment, prices, cancelling, form checks, the app and who I coach.',
-};
+export const metadata: Metadata = pageMeta('FAQ', 'Straight answers about Chi-Rho coaching: beginners, equipment, prices, cancelling, form checks, the app and who I coach.');
 
 const GROUPS: FaqGroup[] = [
   {

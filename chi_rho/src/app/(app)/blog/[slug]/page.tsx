@@ -3,6 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Entry } from '@/components/log'
 import { notFound } from 'next/navigation'
+import { pageMeta } from '@/lib/seo';
 
 // This would eventually come from a database or CMS
 const blogPosts: Record<string, {
@@ -494,7 +495,7 @@ const blogPosts: Record<string, {
 
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
     const post = blogPosts[params.slug]
-    return post ? { title: post.title, description: post.excerpt } : {}
+    return post ? pageMeta(post.title, post.excerpt) : {}
 }
 
 export default function BlogPostPage({ params }: { params: { slug: string } }) {

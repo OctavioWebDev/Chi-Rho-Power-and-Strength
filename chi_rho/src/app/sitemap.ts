@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next'
 
+import { templates } from './templates/templates'
+
 const URL = 'https://www.chirhostrength.com'
 
 const BLOG_SLUGS = [
@@ -25,12 +27,14 @@ const PAGES: { path: string; priority: number; changeFrequency: MetadataRoute.Si
   { path: '/blog', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/faq', priority: 0.6, changeFrequency: 'monthly' },
   { path: '/templates', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/quiz', priority: 0.5, changeFrequency: 'monthly' },
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
   return [
     ...PAGES.map((p) => ({ url: `${URL}${p.path}`, lastModified: now, changeFrequency: p.changeFrequency, priority: p.priority })),
+    ...Object.keys(templates).map((id) => ({ url: `${URL}/templates/${id}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 })),
     ...BLOG_SLUGS.map((slug) => ({ url: `${URL}/blog/${slug}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 })),
   ]
 }

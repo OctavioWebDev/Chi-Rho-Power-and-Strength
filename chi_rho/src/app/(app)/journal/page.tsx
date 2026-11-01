@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { ButtonLink, Checklist, Cover, Entry, Myths, PageTitle } from '@/components/log';
+import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Strength Training Journal',
-  description: 'The Chi-Rho Strength Training Journal: 450+ pages of daily logs, weekly check-ins, monthly reviews and PR tracking.',
-};
+export const metadata: Metadata = pageMeta('Strength Training Journal', 'The Chi-Rho Strength Training Journal: 450+ pages of daily logs, weekly check-ins, monthly reviews and PR tracking.');
 
 const AMAZON = 'https://www.amazon.com/dp/B0GDY9XK56';
 
