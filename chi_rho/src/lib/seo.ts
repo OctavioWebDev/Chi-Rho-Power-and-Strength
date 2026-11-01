@@ -1,105 +1,22 @@
-import { Metadata } from 'next/types';
+import type { Metadata } from 'next';
 
-export const generateJsonLd = ({
-  title,
-  description,
-  url,
-  type = 'WebSite',
-  image,
-  datePublished,
-  dateModified,
-  author,
-  publisher,
-}: {
-  title: string;
-  description: string;
-  url: string;
-  type?: string;
-  image?: string;
-  datePublished?: string;
-  dateModified?: string;
-  author?: {
-    name: string;
-    url?: string;
-  };
-  publisher?: {
-    name: string;
-    logo?: string;
-  };
-}) => {
-  const jsonLd: any = {
-    '@context': 'https://schema.org',
-    '@type': type,
-    name: title,
-    description,
-    url,
-  };
+const SITE = 'Chi-Rho Power & Strength';
 
-  if (image) {
-    jsonLd.image = image;
-  }
-
-  if (datePublished) {
-    jsonLd.datePublished = datePublished;
-  }
-
-  if (dateModified) {
-    jsonLd.dateModified = dateModified;
-  }
-
-  if (author) {
-    jsonLd.author = {
-      '@type': 'Person',
-      name: author.name,
-      ...(author.url && { url: author.url }),
-    };
-  }
-
-  if (publisher) {
-    jsonLd.publisher = {
-      '@type': 'Organization',
-      name: publisher.name,
-      ...(publisher.logo && {
-        logo: {
-          '@type': 'ImageObject',
-          url: publisher.logo,
-        },
-      }),
-    };
-  }
-
-  return jsonLd;
-};
-
-export const generateMetadataWithDefaults = (metadata: Partial<Metadata> = {}): Metadata => {
-  const defaultMetadata: Metadata = {
-    title: 'Chi-Rho Power & Strength',
-    description: 'Prepare, Commit, Respond - A blog on my thoughts and learnings on strength training and living a purposeful life.',
-    metadataBase: new URL('https://yourdomain.com'),
-    openGraph: {
-      type: 'website',
-      locale: 'en_US',
-      siteName: 'Chi-Rho Power & Strength',
-      title: 'Chi-Rho Power & Strength',
-      description: 'Prepare, Commit, Respond - A blog on strength training and purposeful living',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Chi-Rho Power & Strength',
-      description: 'Prepare, Commit, Respond - Strength training and purposeful living',
-    },
-  };
-
+/**
+ * A page's title and description, plus the matching link preview. Next.js replaces the
+ * layout's whole openGraph block when a page sets one, so the shared parts are repeated here.
+ */
+export function pageMeta(title: string, description?: string): Metadata {
   return {
-    ...defaultMetadata,
-    ...metadata,
+    title,
+    description,
     openGraph: {
-      ...defaultMetadata.openGraph,
-      ...metadata.openGraph,
-    },
-    twitter: {
-      ...defaultMetadata.twitter,
-      ...metadata.twitter,
+      title: `${title} | ${SITE}`,
+      description,
+      siteName: SITE,
+      locale: 'en_US',
+      type: 'website',
+      images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: SITE }],
     },
   };
-};
+}

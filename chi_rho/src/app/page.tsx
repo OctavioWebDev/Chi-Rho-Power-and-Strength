@@ -8,6 +8,22 @@ export const metadata: Metadata = {
   description: 'Strength coaching for men in Toledo and online. Are you stronger than you were last month?',
 };
 
+// Business details for search engines (schema.org).
+const BUSINESS_JSON_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsActivityLocation',
+  name: 'Chi-Rho Power & Strength',
+  url: 'https://www.chirhostrength.com',
+  logo: 'https://www.chirhostrength.com/assets/logos/4885c978-6521-4cbf-85d6-fea7774ef2d9.png',
+  image: 'https://www.chirhostrength.com/opengraph-image',
+  description: 'Strength coaching for men in Toledo and online.',
+  telephone: '+1-419-343-9894',
+  email: 'chirhostrength@gmail.com',
+  address: { '@type': 'PostalAddress', addressLocality: 'Toledo', addressRegion: 'OH', addressCountry: 'US' },
+  areaServed: ['Toledo, Ohio', 'Online'],
+  founder: { '@type': 'Person', name: 'Octavio Sanchez' },
+};
+
 const DAY_ONE = [
   'What are you doing now, and why?',
   'Can you explain the logic behind it?',
@@ -20,6 +36,7 @@ const DAY_ONE = [
 export default function Home() {
   return (
     <main className="lg-wrap">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BUSINESS_JSON_LD) }} />
       <Entry label="Toledo, Ohio" sub="and online">
         <div className="lg-hero">
           <div>

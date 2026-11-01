@@ -1,5 +1,9 @@
 import { Suspense } from 'react';
+import type { Metadata } from 'next';
 import GymSuccessContent from './GymSuccessContent';
+
+// After-checkout page: keep it out of search.
+export const metadata: Metadata = { title: { absolute: 'Founding membership | Chi-Rho Power & Strength' }, robots: { index: false } };
 
 export default function GymSuccessPage() {
   return (

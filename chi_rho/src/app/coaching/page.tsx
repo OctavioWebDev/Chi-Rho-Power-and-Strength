@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
 import { ButtonLink, Entry, PageTitle } from '@/components/log';
 import { AddOns, HowItStarts, InPerson, OnlinePackages, TheDeal, WhoFor } from './sections';
+import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Coaching',
-  description: 'Strength coaching for men: online from $250 a month, in person in Toledo at $1,150 a month.',
-};
+export const metadata: Metadata = pageMeta('Coaching', 'Strength coaching for men: online from $250 a month, in person in Toledo at $1,150 a month.');
 
 export default function CoachingPage() {
   return (

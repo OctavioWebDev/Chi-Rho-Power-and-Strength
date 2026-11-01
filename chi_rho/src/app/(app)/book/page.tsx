@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import { ButtonLink, Checklist, Cover, Entry, PageTitle, Sheet } from '@/components/log';
+import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Shut Up and Lift',
-  description: 'Shut Up and Lift by Octavio Sanchez. Three exercises, three days a week, add weight. A no-nonsense guide to getting strong.',
-};
+export const metadata: Metadata = pageMeta('Shut Up and Lift', 'Shut Up and Lift by Octavio Sanchez. Three exercises, three days a week, add weight. A no-nonsense guide to getting strong.');
 
 const AMAZON = 'https://www.amazon.com/dp/B0GF41CCDH';
 const SAMPLE = '/downloads/shut-up-and-lift-sample-chapter.pdf';

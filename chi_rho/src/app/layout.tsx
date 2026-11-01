@@ -18,18 +18,12 @@ export const metadata: Metadata = {
   creator: 'Octavio Sanchez',
   publisher: 'Chi-Rho Power & Strength',
   metadataBase: new URL('https://www.chirhostrength.com/'),
+  // './' resolves to each page's own URL, so every page names itself as the original.
+  alternates: { canonical: './' },
   openGraph: {
     title: 'Chi-Rho Power & Strength',
     description: 'Strength coaching for men in Toledo and online. Are you stronger than you were last month?',
     siteName: 'Chi-Rho Power & Strength',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Chi-Rho Power & Strength',
-      },
-    ],
     locale: 'en_US',
     type: 'website',
   },
