@@ -52,6 +52,10 @@ export default function Footer() {
             <span className="lg-sel">(419) 343-9894</span>
             <br />
             <span className="lg-sel">chirhostrength@gmail.com</span>
+            <br />
+            <a href="https://www.instagram.com/chirhostrength/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <br />
+            <a href="https://www.youtube.com/@ChiRhoStrength" target="_blank" rel="noopener noreferrer">YouTube</a>
           </p>
         </div>
       </div>
