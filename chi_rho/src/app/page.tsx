@@ -22,7 +22,7 @@ const BUSINESS_JSON_LD = {
   address: { '@type': 'PostalAddress', addressLocality: 'Toledo', addressRegion: 'OH', addressCountry: 'US' },
   areaServed: ['Toledo, Ohio', 'Online'],
   founder: { '@type': 'Person', name: 'Octavio Sanchez' },
-  sameAs: ['https://www.instagram.com/chirhostrength/'],
+  sameAs: ['https://www.instagram.com/chirhostrength/', 'https://www.youtube.com/@ChiRhoStrength'],
 };
 
 const DAY_ONE = [
