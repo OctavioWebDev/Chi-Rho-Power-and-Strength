@@ -4,7 +4,7 @@ import { Entry, PageTitle } from '@/components/log';
 import ApplyForm from './ApplyForm';
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('Apply', 'Fill out the intake sheet for Chi-Rho strength coaching. Online, in person in Toledo, or group classes for men 50+.');
+export const metadata: Metadata = pageMeta('Apply', 'Fill out the intake sheet for Chi-Rho strength coaching. Online, in person in Toledo, or group classes for men 50+.', '/apply');
 
 export default function ApplyPage() {
   return (

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { ButtonLink, Entry, PageTitle, RateList } from '@/components/log'
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('Programs', 'Training programs you can run yourself, $5 each: foundational strength, hypertrophy and powerlifting.');
+export const metadata: Metadata = pageMeta('Strength & Powerlifting Programs', 'Training programs you can run yourself, $5 each: foundational strength, hypertrophy and powerlifting.', '/templates');
 
 const paidTemplates = [
   {

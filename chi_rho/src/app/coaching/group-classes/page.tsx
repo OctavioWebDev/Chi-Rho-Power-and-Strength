@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ButtonLink, Checklist, Entry, Facts, Faq, LogTable, PageTitle, Sheet } from '@/components/log';
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('Group classes for men 50+', 'Coached barbell classes in Toledo for men over 50. Five lifters max, $300 a month.');
+export const metadata: Metadata = pageMeta('Strength Classes for Men 50+ in Toledo', 'Coached barbell classes in Toledo for men over 50. Five lifters max, $300 a month.', '/coaching/group-classes');
 
 // Open spots are set by hand until classes fill.
 const CLASSES = [

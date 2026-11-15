@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { businessJsonLd } from '@/lib/business-json-ld';
 import {
   ButtonLink, Cover, Entry, LogTable, Myths, RateList, Seal, Sheet,
 } from '@/components/log';
@@ -6,23 +7,7 @@ import {
 export const metadata: Metadata = {
   title: { absolute: 'Chi-Rho Power & Strength | Strength coaching in Toledo and online' },
   description: 'Strength coaching for men in Toledo and online. Are you stronger than you were last month?',
-};
-
-// Business details for search engines (schema.org).
-const BUSINESS_JSON_LD = {
-  '@context': 'https://schema.org',
-  '@type': 'SportsActivityLocation',
-  name: 'Chi-Rho Power & Strength',
-  url: 'https://www.chirhostrength.com',
-  logo: 'https://www.chirhostrength.com/assets/logos/4885c978-6521-4cbf-85d6-fea7774ef2d9.png',
-  image: 'https://www.chirhostrength.com/opengraph-image',
-  description: 'Strength coaching for men in Toledo and online.',
-  telephone: '+1-419-343-9894',
-  email: 'chirhostrength@gmail.com',
-  address: { '@type': 'PostalAddress', addressLocality: 'Toledo', addressRegion: 'OH', addressCountry: 'US' },
-  areaServed: ['Toledo, Ohio', 'Online'],
-  founder: { '@type': 'Person', name: 'Octavio Sanchez' },
-  sameAs: ['https://www.instagram.com/chirhostrength/', 'https://www.youtube.com/@ChiRhoStrength'],
+  alternates: { canonical: '/' },
 };
 
 const DAY_ONE = [
@@ -37,13 +22,16 @@ const DAY_ONE = [
 export default function Home() {
   return (
     <main className="lg-wrap">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BUSINESS_JSON_LD) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: businessJsonLd() }} />
       <Entry label="Toledo, Ohio" sub="and online">
         <div className="lg-hero">
           <div>
             <h1 className="lg-h1">
               Are you stronger than you were <em>last month?</em>
             </h1>
+            <h2 className="lg-h3 lg-muted" style={{ marginTop: 18 }}>
+              Powerlifting &amp; strength coaching in Toledo, Ohio — in person and online.
+            </h2>
             <p className="lg-lede">
               If you don&apos;t know, you&apos;re not writing it down. I coach men in Toledo and online to get stronger every
               week. Stronger is healthier.

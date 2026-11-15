@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Entry, PageTitle } from '@/components/log'
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('Terms of service');
+export const metadata: Metadata = pageMeta('Terms of service', undefined, '/terms');
 
 export default function TermsPage() {
   return (

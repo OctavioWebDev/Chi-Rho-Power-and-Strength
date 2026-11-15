@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ButtonLink, Checklist, Entry, Facts, PageTitle, Sheet } from '@/components/log';
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('My story', 'Octavio Sanchez: 10+ years under the bar around overnight shifts, a 480 squat and deadlift, and the author of Shut Up and Lift.');
+export const metadata: Metadata = pageMeta('My story', 'Octavio Sanchez: 10+ years under the bar around overnight shifts, a 480 squat and deadlift, and the author of Shut Up and Lift.', '/mystory');
 
 const MISTAKES = [
   ['Switching programs every 6 to 8 weeks', 'Wasted a whole year.'],
