@@ -3,7 +3,7 @@ import { ButtonLink, Entry, PageTitle } from '@/components/log';
 import { CoachingFaq, HowItStarts, ONLINE_FAQ, OnlinePackages, TheDeal } from '../sections';
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('Online coaching', 'Online strength coaching for men, from $250 a month. Your program, check-ins and messages in the Chi-Rho Lifts app.');
+export const metadata: Metadata = pageMeta('Online coaching', 'Online strength coaching for men, from $250 a month. Your program, check-ins and messages in the Chi-Rho Lifts app.', '/coaching/online');
 
 export default function OnlineCoachingPage() {
   return (

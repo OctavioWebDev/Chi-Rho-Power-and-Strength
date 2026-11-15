@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Entry, PageTitle } from '@/components/log'
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('Privacy policy');
+export const metadata: Metadata = pageMeta('Privacy policy', undefined, '/privacy');
 
 export default function PrivacyPage() {
   return (

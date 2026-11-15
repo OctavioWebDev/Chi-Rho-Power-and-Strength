@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { ButtonLink, Entry, Faq, LogTable, Myths, PageTitle, Sheet } from '@/components/log';
 import { pageMeta } from '@/lib/seo';
 
-export const metadata: Metadata = pageMeta('Training philosophy', 'The Shut Up and Lift method: squat, bench, deadlift and press, three days a week, more weight every time you get every rep.');
+export const metadata: Metadata = pageMeta('Training philosophy', 'The Shut Up and Lift method: squat, bench, deadlift and press, three days a week, more weight every time you get every rep.', '/philosophy');
 
 const day = (press: string) => [
   { lift: 'Squat', sets: '3 × 5' },

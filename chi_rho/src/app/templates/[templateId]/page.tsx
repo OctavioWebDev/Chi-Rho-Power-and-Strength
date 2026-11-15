@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { templateId: strin
     description: 'The requested training template could not be found.'
   };
 
-  return pageMeta(template.title, template.description);
+  return pageMeta(template.title, template.description, `/templates/${params.templateId}`);
 }
 
 // Dynamically import the client component with no SSR since it uses browser APIs

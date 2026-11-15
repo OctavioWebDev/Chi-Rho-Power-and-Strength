@@ -2,12 +2,14 @@ import type { Metadata } from 'next';
 import { ButtonLink, Entry, PageTitle } from '@/components/log';
 import { CoachingFaq, HowItStarts, IN_PERSON_FAQ, InPerson, TheDeal } from '../sections';
 import { pageMeta } from '@/lib/seo';
+import { businessJsonLd } from '@/lib/business-json-ld';
 
-export const metadata: Metadata = pageMeta('In-person coaching', 'In-person strength coaching in Toledo, Ohio. Three coached sessions a week, $1,150 a month.');
+export const metadata: Metadata = pageMeta('In-Person Strength Coaching in Toledo, OH', 'In-person strength coaching in Toledo, Ohio. Three coached sessions a week, $1,150 a month.', '/coaching/in-person');
 
 export default function InPersonCoachingPage() {
   return (
     <main className="lg-wrap">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: businessJsonLd() }} />
       <Entry label="Coaching" sub="Toledo">
         <PageTitle lede="Side by side in the gym. Every rep coached, every session logged. Spots are limited.">
           I&apos;m there for <em>every rep.</em>

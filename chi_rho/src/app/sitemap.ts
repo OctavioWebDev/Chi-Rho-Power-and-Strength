@@ -1,17 +1,12 @@
 import { MetadataRoute } from 'next'
 
+import { blogPosts, postDate } from '@/lib/blog-posts'
 import { templates } from './templates/templates'
 
 const URL = 'https://www.chirhostrength.com'
 
-const BLOG_SLUGS = [
-  'progressive-overload-explained',
-  'stop-program-hopping',
-  'beginner-mistakes',
-  'squat-form-basics',
-  'training-consistency',
-]
-
+// Clean paths only (no query strings, no /contact, which redirects to /apply). Pages without a
+// real date leave lastModified out rather than claiming every build changed them.
 const PAGES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'] }[] = [
   { path: '', priority: 1, changeFrequency: 'weekly' },
   { path: '/coaching', priority: 0.9, changeFrequency: 'monthly' },
@@ -31,10 +26,20 @@ const PAGES: { path: string; priority: number; changeFrequency: MetadataRoute.Si
 ]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
+  const posts = Object.values(blogPosts)
+  const newest = posts.map((p) => postDate(p.date)).filter((d): d is Date => !!d).sort((a, b) => b.getTime() - a.getTime())[0]
   return [
-    ...PAGES.map((p) => ({ url: `${URL}${p.path}`, lastModified: now, changeFrequency: p.changeFrequency, priority: p.priority })),
-    ...Object.keys(templates).map((id) => ({ url: `${URL}/templates/${id}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 })),
-    ...BLOG_SLUGS.map((slug) => ({ url: `${URL}/blog/${slug}`, lastModified: now, changeFrequency: 'monthly' as const, priority: 0.6 })),
+    ...PAGES.map((p) => ({
+      url: `${URL}${p.path}`,
+      // The blog index changes when its newest post does.
+      ...(p.path === '/blog' && newest ? { lastModified: newest } : {}),
+      changeFrequency: p.changeFrequency,
+      priority: p.priority,
+    })),
+    ...Object.keys(templates).map((id) => ({ url: `${URL}/templates/${id}`, changeFrequency: 'monthly' as const, priority: 0.6 })),
+    ...posts.map((p) => {
+      const d = postDate(p.date)
+      return { url: `${URL}/blog/${p.slug}`, ...(d ? { lastModified: d } : {}), changeFrequency: 'monthly' as const, priority: 0.6 }
+    }),
   ]
 }
